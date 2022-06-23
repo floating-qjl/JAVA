@@ -1,0 +1,15 @@
+package hia;
+
+import java.util.Scanner;
+
+public class hehe {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入年龄");
+        int age=sc.nextInt();
+        System.out.println("年龄：" + age);
+        System.out.println("请输入姓名");
+        String arr=sc.next();
+        System.out.println("欢迎：" + arr);
+    }
+}
