@@ -1,0 +1,10 @@
+import java.util.Random;
+
+public class hehe {
+    public static void main(String[] args) {
+        Random r = new Random();
+        int data = r.nextInt(10) + 10;//从 10 - 19
+        int ans=r.nextInt();
+        System.out.println(ans);
+    }
+}
