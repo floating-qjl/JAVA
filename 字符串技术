@@ -1,0 +1,49 @@
+package hia;
+
+import java.lang.String;
+import java.util.Scanner;
+
+
+public class hehe {
+    public static void main(String[] args) {
+        String a = "haha";
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" 请输入：");
+        String name = sc.next();
+        
+        if(name == a)//比较地址，a位于常量池，name位于普通堆区，一定是false
+            System.out.println("你错啦");
+            
+        if(a.equals(name))//只关心字符内容是否一样
+            System.out.println("haha");
+            
+        if(name.equalsIgnoreCase(a))//忽略大小写比较字符串
+            System.out.println("死亡");
+            
+        System.out.println(a.length());//获取字符串长度
+
+        System.out.println(a.charAt(1));//获取某个索引处的字符
+
+        char[] local = a.toCharArray();//将字符串转化为字符数组返回
+
+        String rs = a.substring(0, 7);//截取从 0 到 7 下标的字符，形成新的字符串
+        System.out.println(rs);
+
+        String re = a.substring(2);//从当前索引截取到最后
+        System.out.println(re);
+
+        String ha = "我是傻逼，我是笨蛋，我是蠢货";
+        String la = ha.replace("我", "你");
+        System.out.println(la);
+
+        System.out.println(ha.contains("我"));//判断是否包含，返回 boolean
+
+        System.out.println(ha.startsWith("我"));//判断是否由。。。开始
+        System.out.println(ha.startsWith("你"));
+
+        String arr = "a,b,c,d,e";
+        String[] ch = arr.split(",");//按照某个内容，把字符串分割成字符串数组并返回
+        for (int i = 0; i < ch.length; ++i)
+            System.out.println(ch[i]);
+    }
+}
