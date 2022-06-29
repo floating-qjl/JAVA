@@ -26,7 +26,7 @@ public class hehe {
 
         char[] local = a.toCharArray();//将字符串转化为字符数组返回
 
-        String rs = a.substring(0, 7);//截取从 0 到 7 下标的字符，形成新的字符串
+        String rs = a.substring(0, 7);//截取从 0 到 6 下标的字符，形成新的字符串
         System.out.println(rs);
 
         String re = a.substring(2);//从当前索引截取到最后
