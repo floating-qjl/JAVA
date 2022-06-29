@@ -1,0 +1,61 @@
+package hia;
+
+import java.lang.String;
+import java.util.ArrayList;
+
+public class hehe {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList();//写成泛型更规范
+//        ArrayList<Object>list = new ArrayList<>();
+
+        list.add("我是傻逼");
+        list.add("hiahia");
+        list.add(213);
+        list.add(true);
+        list.add('a');
+        System.out.println(list);//索引从 0 开始
+
+        list.add(1, "死神");//从索引插入
+        System.out.println(list);
+
+        System.out.println("--------------------------");
+        ArrayList<Integer> arr = new ArrayList<>();//泛型类，可以在编译阶段约束集合对象只能操作某种数据类型
+        //JDK1.7后，泛型后面的类型申明可以不写
+        arr.add(12);
+        arr.add(1);
+        arr.add(0, 333);
+        arr.add(78);
+        arr.add(567);
+//        arr.add("哈哈");//报错
+        System.out.println(arr);
+
+        System.out.println("--------------------------");
+        System.out.println(arr.get(3));//获取某个索引位置的元素值
+
+        System.out.println(arr.size());//获取集合的大小
+
+        for (int a = 0; a < arr.size(); ++a)
+            System.out.println(arr.get(a));//遍历
+
+        System.out.println("--------------------------");
+        System.out.println(arr);
+        int ch = arr.remove(2);//删除某个位置的元素值，并返回删除的元素值
+        System.out.println(arr);
+
+        System.out.println("--------------------------");
+        System.out.println(arr.remove((Object)12));//直接删除元素值，成功返回true，
+        System.out.println(arr);    //若有多个相同元素，则会默认删除前面那个
+
+        System.out.println("--------------------------");
+        System.out.println(list);
+        System.out.println(list.remove(true));
+        System.out.println(list.remove("死神"));
+        System.out.println(list);
+
+        System.out.println("--------------------------");
+        System.out.println(arr);
+        int heihei = arr.set(0,12);//修改某个索引位置的元素值，并返回原元素值
+        System.out.println(heihei);
+        System.out.println(arr);
+    }
+}
