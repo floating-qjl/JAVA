@@ -1,0 +1,23 @@
+package hia;
+
+import java.lang.String;
+import java.util.Scanner;
+
+
+public class hehe {
+    public static void main(String[] args) {
+        String a = "haha";
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" 请输入：");
+        String name = sc.next();
+        
+        if(name == a)//比较地址，a位于常量池，name位于普通堆区，一定是false
+            System.out.println("你错啦");
+            
+        if(a.equals(name))//只关心字符内容是否一样
+            System.out.println("haha");
+            
+        if(name.equalsIgnoreCase(a))//忽略大小写比较字符串
+            System.out.println("死亡");
+    }
+}
