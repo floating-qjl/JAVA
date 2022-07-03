@@ -1,0 +1,29 @@
+
+StringBuilder 概述：
+StringBuilder 是一个可变的字符串类，我们可以把它看作是一个对象容器
+作用：提高字符串的操作效率，如拼接、修改等
+
+StringBuilder构造器：
+public StringBuilder()     创建一个空白的可变的字符串对象，不包含任何内容
+public StringBuilder(String str)      创建一个指定字符串内容的可变字符串对象
+一般使用第一种。当打印时直接输出内容而非地址，说明 toString 方法已经重写过了
+
+StringBuilder常用方法：
+public StringBuilder append(任意类型)    添加数据并返回 String Builder 对象本身。
+该函数返回 StringBuilder，所以可以面试编程，即 sb.append().append().append();
+
+public StringBuilder reverse()           将对象的内容反转。
+也可以面试编程，即 sb.reverse().append();
+
+注意：StringBuilder 只是拼接字符串的手段，效率好
+      最终的结果还是要恢复成 String 类型（习惯）
+
+public int length()                      返回对象内容长度。
+public String toString()                 通过 toString() 就可以实现把 StringBuilder 转换为 String。
+
+为什么使用 String Builder 效率更高？
+若直接使用 String，会先在字符串常量池中存储常量字符串，再在堆内存中进行‘+’运算，
+并且因为 String 内容不可变，该运算会不停的 new 一个 StringBuilder 对象，再进行运算，占内存，效率低
+而若直接使用 StringBuilder 只会 new 一个对象，内容可变，拼接、修改字符串性能好
+
+
