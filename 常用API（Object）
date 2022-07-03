@@ -1,0 +1,33 @@
+
+常用API：
+API 应用程序编程接口
+简单来的：就是java已经帮我们写好的一些方法，我们直接拿过来用就可以了
+
+Object类的作用：
+一个类要么默认继承了Object类，要么间接继承了Object类，Object类是java中的祖宗类
+Object类的方法是一切子类都可以直接使用的，所以我们要学习Object类的方法
+
+Object类的常用方法：
+public String toString()   默认是返回当前对象在堆内存中的地址信息：类的全限名@内存地址
+但是一般不这么用，通常是重写该方法使其返回地址对应的内容
+例如：
+System.out.println(s.toString());
+System.out.println(s);
+
+public Boolean equals(Object o)   默认是比较当前对象与另一个对象的地址是否相同，相同返回true，不同返回false
+若要比较地址是都完全相同完全可以使用“==”代替
+所以使用时要重写该方法，以此来比较地址对应的内容是否相同
+System.out.println(s1.equals(s2));
+
+
+Objects概述：
+Objects类与Object还是继承关系，Objects类是从JDK1.7开始之后才有的
+对于官方给出的equals方法中并没有对象自己的equals方法，而是选择了Objects的queals方法来比较两个对象
+例如：Objects.equals(name,student.name);
+Objects 的 equals 方法比较的结果是一样的，但是更安全
+（一般的equals会报错，留下隐患出现空指针异常，但是 Objects.queals() 多了一个非空性的校验不会报错且返回一个准确的结果）
+
+public static boolean isNull(Object obj)     判断变量是否为 null，为 null 返回 true，反之返回 false
+与 s1 == null 结果完全一模一样
+
+
