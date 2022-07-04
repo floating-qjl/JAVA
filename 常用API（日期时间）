@@ -1,0 +1,60 @@
+
+Date类概述：
+Date类的对象在Java中代表的是当前所在系统的此刻日期时间。
+
+Date的构造器：
+public Date()                创建一个Date对象，代表的是系统当前此刻日期时间
+public Date(long time)      把时间毫秒值转换成Date日期对象。
+
+打印创建的对象，得出结果为时间内容，说明方法已经重写
+
+Date的常用方法：
+public long getTime()              获取时间对象的毫秒值。
+public void setTime(long time)    设置日期对象的时间为当前时间毫秒值对应的时间
+
+SimpleDateFormat类作用：
+可以对Date对象或时间毫秒值格式化成我们喜欢的时间形式.
+也可以把字符串的时间形式解析成日期对象.
+格式化：
+Date对象 --->   2099年11月11日11:11
+时间毫秒值--->  2099年11月11日11:11
+解析：
+2099年11月11日11:11 ---> Date对象
+
+SimpleDateFormat的构造器：
+public SimpleDateFormat()                 构造一个SimpleDateFormat，使用默认格式
+public SimpleDateFormat(String pattern)   构造一个SimpleDateFormat，使用指定的格式
+
+SimpleDateFormat的格式化方法：
+public final String format(Date date)     将日期格式化成日期/时间字符串。
+public final String format(Object time)   将时间毫秒值式化成日期/时间字符串。
+
+格式化的时间形式的常用的模式对应关系：
+y   年
+M   月
+d   日
+H   时
+m   分
+s   妙
+2020-11-11 11:11:11 -------- yyyy-MM-dd HH:mm:ss
+
+SimpleDateFormat解析字符串时间成为日期对象：
+public Date parse(String source)      从给定字符串的开始解析文本以生成日期。
+
+
+
+Calendar概述：
+Calendar代表了系统此刻日期对应的日历对象
+Calendar是一个抽象类，不能直接创建对象
+
+Calendar日历类创建日历对象的方法：
+public static Calendar getInstance()      获取当前日历。
+
+Calendar常用方法：
+public int get(int field)                获取日期中的某个字段信息。
+public void set(int field,int value)     修改日历的某个字段信息。
+public void add(int field,int amount)    为某个字段增加/减少指定的值。
+public final Date getTime()               拿到此刻日期对象。
+public long getTimeInMillis()             拿到此刻时间毫秒值。
+
+注意：calendar是可变日期对象，一旦修改后其对象本身表示的时间将产生变化
