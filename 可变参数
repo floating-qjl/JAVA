@@ -1,0 +1,46 @@
+
+可变参数
+        可变参数用在形参中可以接收多个数据。
+        可变参数的格式:数据类型...参数名称
+
+可变参数的作用：
+        传输参数非常灵活，方便。
+        可以不传输参数，可以传输1个或者多个，也可以传输一个数组
+        可变参数在方法内部本质上就是一个数组。
+
+        public static void sum(int . . .nums){
+        }
+        sum() ; // 1、不传参数
+        suD( ..nums: 10); // 2、可以传输一个参数
+        sum(.nums: 10,20,30); // 3、可以传多个参数
+        sum(new int[]{10,20,30,40,50});//4.可以传一个数组
+
+可变参数的注意事项:
+        1.一个形参列表中可变参数只能有一个
+        2.可变参数必须放在形参列表的最后面
+        public static void sum( int age, int. . .nums){}
+
+
+
+
+集合工具类Collections：
+        java.utils.Collections:是集合工具类
+        作用:Collections并不属于集合，是用来操作集合的工具类。
+
+Collections常用的API：
+    public static <T> boolean addAl1(Collection<? super T> c，T... elements)    给集合对象批量添加元素；
+    public static void shuffle(List<?> list);                                    打乱List集合元素的顺序；
+
+    public static <T>void sort(List<T> list);                                    将集合中元素按照默认规则排序。
+    public static <T> void sort(List<T> list，Comparator<? super T> c);          将集合中元素按照指定规则排序。（自定义类）
+        List集合存储相同大小的元素会保留
+        Collections.sort(apples,new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1，Apple o2) {
+            return Double.compare(o1.getPrice() , o2.getPrice());
+        }
+        });
+    
+        Collections.sort(apples，( o1, o2) -> Double.compane(o1.getPrice() , o2.getPrice()));
+        
+       
