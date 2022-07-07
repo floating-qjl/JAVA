@@ -1,0 +1,112 @@
+Card类：
+
+package tree;
+
+public class Card {
+    private String color;
+    private String nums;
+    private int compare;
+
+    public Card(){
+
+    }
+    public Card(String color, String nums, int compare) {
+        this.color = color;
+        this.nums = nums;
+        this.compare = compare;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getNums() {
+        return nums;
+    }
+
+    public void setNums(String nums) {
+        this.nums = nums;
+    }
+
+    public int getCompare() {
+        return compare;
+    }
+
+    public void setCompare(int compare) {
+        this.compare = compare;
+    }
+
+    @Override
+    public String toString() {
+        return  nums + color;
+    }
+}
+
+
+
+
+主类：
+
+package tree;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class haha {
+    public static List<Card> cardAll = new ArrayList<>();
+
+    static{
+        String[] size = {"3","4","5","6","7","8","9","10","J","Q","K","A","2"};
+        String[] color = {"♠","♣","♥","♤"};
+        int index = 0;
+        for(String a:size){
+            ++index;
+            for(String b:color){
+                Card card = new Card(b,a,index);
+                cardAll.add(card);
+            }
+        }
+        Card card1 = new Card("","♔",++index);
+        Card card2 = new Card("","♕",++index);
+        Collections.addAll(cardAll,card1,card2);
+        System.out.println("新牌：" + cardAll);
+    }
+    public static void main(String[] args) {
+        Collections.shuffle(cardAll);
+        System.out.println("乱牌：" + cardAll);
+        List<Card> xiaoming = new ArrayList<>();
+        List<Card> xiaohong = new ArrayList<>();
+        List<Card> xiaofeng = new ArrayList<>();
+
+        for (int i = 0; i < cardAll.size() ; i++) {
+            if (i % 3 == 0) {
+                xiaoming.add(cardAll.get(i));
+            } else if (i % 3 == 1) {
+                    xiaohong.add(cardAll.get(i));
+            } else {
+                    xiaofeng.add(cardAll.get(i));
+            }
+        }
+        List<Card> last = cardAll.subList(cardAll.size()-3,cardAll.size());
+
+        Mysort(xiaoming);
+        Mysort(xiaohong);
+        Mysort(xiaofeng);
+
+
+        System.out.println("小明：" + xiaoming);
+        System.out.println("小红：" + xiaohong);
+        System.out.println("小丰：" + xiaofeng);
+    }
+
+    private static void Mysort(List<Card> xiaoming) {
+        Collections.sort(xiaoming, (o1, o2) -> o2.getCompare() - o1.getCompare());
+    }
+}
