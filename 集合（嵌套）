@@ -1,0 +1,36 @@
+
+
+//使用一个Hap集合存储。
+        Map<String,List<String>> data = new HashMap<>();
+// 2、把学生选择的数据存入进去。
+        List<String> selects = new ArrayList<>();
+        collections.addAll(selects,..elements: "A”，"C"");；
+        data.put("罗勇", selects);
+
+        List<String> selects1 = new ArrayList<>();
+        collections.addAll(selects1,...elements: "B""，"C" ，"D"");
+        data.put("胡涛"，selects1);
+        List<String> selects2 = new ArrayList<>();
+
+        collections.addAll(selects2 , ...elements: "A"，"B"，"C"，"D");
+        data.put("刘军", selects2);
+        System.out.println(data);
+
+        //统计每个系点选择的人数。
+        Map<String,Integer> infos = new HashMap<>();
+        //提取所有人选择的景点的信息。
+        collection<List<String>> values = data.values()；
+        // values = [[A，B，C，D]，[B，C，D]，[A，C]]
+        for (List<String> value : values) {
+            for (String s : value) {
+                //有没有包含这个景点
+                if(infos.containskey(s)){
+                    infos.put(s, infos.get(s) +1);
+                }
+                 else {
+                    infos.put(s , 1)；
+                 }
+            }
+        }
+
+
