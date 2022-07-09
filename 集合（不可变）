@@ -1,0 +1,33 @@
+
+
+
+什么是不可变集合?
+        不可变集合，就是不可被修改的集合。
+        集合的数据项在创建的时候提供，并且在整个生命周期中都不可改变。否则报错。
+
+如何创建不可变集合?
+        在List、Set、Map接口中，都存在of方法，可以创建一个不可变的集合。
+
+static <E> List<E> of(E...elements)             创建一个具有指定元素的List集合对象；
+static <E> Set<E> of(E...elements)              创建一个具有指定元素的Set集合对象；
+static <K , V> Map<K, v> of(E...elements)       创建一个具有指定元素的Map集合对象；
+
+这个集合不能添加，不能删除，不能修改。
+
+List<Double> lists = List.of(569.5，700.5，523.0，570.5);
+//lists.add(689.0);
+// lists.set(2，698.5);
+// system.out.println(lists);
+double score = lists.get(1);
+system.out.println(score);
+
+不可变的Set集合
+Set<String> names = Set.of("迪丽热巴","迪丽热九"。"马尔扎哈"，"卡尔贬巴");
+//names . aad(""三少爷");
+System.out.println(names) ;
+集合不可变，无法添加，添加则会报错
+
+Map<String，Integer> maps = Map.of( kl: "huawei"，vt:2，k2:".Java开发"，v2:1，k3:"手表"， v3:1);
+maps.put("衣服"，3);
+System.out.println(maps);
+
