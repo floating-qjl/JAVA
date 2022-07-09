@@ -1,0 +1,161 @@
+
+
+什么是Stream流?
+        在Java 8中，得益于Lambda所带来的函数式编程，引入了一个全新的Stream流概念。
+        目的:用于简化集合和数组操作的API。
+
+
+Stream流的三类方法
+        获取Stream流：
+            创建一条流水线，并把数据放到流水线上准备进行操作
+        中间方法：
+            流水线上的操作。一次操作完毕之后，还可以继续进行其他操作
+        终结方法：
+            一个Stream流只能有一个终结方法，是流水线上的最后一个操作
+
+
+
+集合获取Stream流的方式：
+可以使用Collection接口中的默认方法stream()生成流
+
+default Stream<E> stream()                            获取当前集合对象的Stream流；
+
+代码：
+        Collection集合获取流：
+        collection<String> list = new ArrayList<>();
+        Stream<String> s = list.stream();
+
+        Map集合获取流：
+        Map<str1ng,Integer> maps = new HashMapc>()；
+        //键流
+        Stream<string> keyStream = maps.keySet().stream()；
+        //值流
+        Stream<Integer> valueStream = maps.values().stream()；
+        //键值对流（拿整体)
+        Stream<Map.Entry<String,Integer>> keyAndValueStream = maps.entrySet().stream();
+
+
+
+
+数组获取Stream流的方式：
+public static <T>Stream<T> stream(T[] array)          获取当前数组的Stream流；
+
+public static<T> Stream<T> of(T... values)            获取当前数组/可变数据的Stream流；
+
+代码：
+       String[] names = {"赵敏","小昭","灭绝","周芷若"};
+       Stream<String> nameStream = Array.stream(names)；
+       Stream<String> nameStream2 = Stream.of(names);
+
+
+Stream的常用API：
+        Stream<T> filter(Predicate< ? super T> predicate)        用于对流中的数据进行过滤。
+
+        Stream<T> limit( long maxSize)                           获取前几个元素；
+
+        Stream<T> skip(long n)                                   跳过前几个元素；
+
+        Stream<T> distinct()                                     去除流中重复的元素。依赖(hashCode和equals方法)；
+
+        static <T> Stream<T> concat(Stream a,Stream b           合并a和b两个流为一个流；
+
+        map ：加工方法
+        count： 统计个数
+        filter：过滤元素
+
+代码：
+        List<string> list = new ArrayList<>();
+        list.add("张无忌");
+        list.add("周芷若");
+        list.add("赵敏");
+        list.add("张强");
+        list.add("张三丰");
+        list.add("张三丰");
+
+        list.stream().filter(new Predicate<String>() {
+            @0verride
+            public boolean test(String s) {
+                return s.startsWith("张");
+            }
+        });
+
+简化：  list.stream().filter(s - > s.startWith("张")).forEach(s -> System.out.println(s));
+        //list.stream().filter(s -> s.startWith("张")).forEach(System.out::println);
+        list.stream().filter(s -> s.length() == 3 ).count();
+
+        // Map加工方法：第一个参数是原材料，第二个参数是加工后结果
+        //给集合元素的前面都加上一个:黑马的:
+        list.stream().map(new Function<String,String>() {
+            @0verride
+            public string apply(String s) {
+                return "黑马的：" + s;
+            }
+        })；
+简化：  list.stream.map(s -> "黑马的：" + s).forEach(System.out::println);
+
+        //需求:把所有的名称都加工成一个学生对象。
+        list.stream.map(s - > new Student(s)).forEach(s -> System.out.println(s));
+化简：  list.stream.map(Student::new).forEach(System.out::println);//构造器引用 方法引用
+
+        //合并流。
+        Stream<String> s1 = list.stream().filter(s -> s.startsWith("张"));
+        Stream<String> s2 = Stream.of( "Java1", "Java2");
+       // public stalic <T> Stream<T> concat(Stream<? extends T> a,Stream<? extends T> b)
+        Stream<String> s3 = Stream.concat(s1,s2);
+
+注意:
+        中间方法也称为非终结方法，调用完成后返回新的Stream流可以继续使用，支持链式编程
+
+
+Stream流的常见终结操作方法:
+        void forEach(Consumer action)        对此流的每个元素执行遍历操作
+        long count()                         返回此流中的元素数
+注意∶终结操作方法，调用完成后流就无法继续使用了，原因是不会返回Stream了。
+
+
+
+
+案例：
+        //寻找工资最大的一个人并封装成优秀员工对象
+        Topperformer t = one.stream().max((e1,e2) -> Double.compare(e1.getSalary() + e1.getBonus(),e2.getSalary() + e2.getBonus())
+        .map(e -> new Topperformer(e.getName(),money. e.getSalary() + e.getBonus())).get()
+        system.out.println(t);
+
+        //升序排序，跳过最小的，忽略最大的，遍历剩余的求平均工资
+        one .stream().sorted((e1,e2) -> Double.compane(e1.getSalary() + e1.getBonus(), e1.getSalary() + e2.getBonus()).
+                skip(1).limit(one.size() - 2).forEach(e -> {
+                      //求出总和:剩余员工的工资总和，此变量必须定义成静态变量，不然无法使用（本质上这里是一个方法，有独立的栈，main栈里的变量无法使用，但是可以使用共享变量）
+                 allMoney += (e.getSalary() + e.getBonus();
+        });
+        system.out.println("开发一部的平均工资是: " + allHoney / (one.size() - 2));
+
+
+
+
+Stream流的收集操作：
+        收集Stream流的含义:就是把Stream流操作后的结果数据转回到集合或者数组中去。
+        Stream流:方便操作集合/数组的手段。
+        集合/数组:才是开发中的目的。
+
+
+
+Stream流的收集方法：
+        R collect(collector collector)                                                     开始收集Stream流，指定收集器
+
+        public static <T> collector tolist()                                              把元素收集到List集合中；
+        public static <T> collector toSet()                                               把元素收集到Set集合中；
+        public static collector toMap(Function keyMapper , Function valueMapper)          把元素收集到Map集合中；
+
+        stream<String> s1 = list.stream().filter(s -> s.startsWith("张"))；
+        List<String> zhangList = s1.collect(Collectors.toList())；
+
+        Stream<String> s2 = list.stream().filter(s -> s.startsWith("张"));
+        set<String> zhangSet = s2.collect(collectors.toSet());
+
+        Stream<string> s3 = list.stream().filter(s -> s.startsWith("张"));
+        0bject[]arrs = s3.toArray();
+
+注意：同一个Stream流只能使用一次
+
+
+
