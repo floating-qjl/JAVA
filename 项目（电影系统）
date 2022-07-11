@@ -1,0 +1,656 @@
+商家类：
+
+package ha;
+
+public class Business extends User {
+    private String shopName;
+    private String address;
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+}
+
+
+
+
+顾客类：
+
+package ha;
+
+public class Customer extends User{
+
+}
+
+
+
+
+电影类：
+
+package ha;
+
+import java.util.Date;
+
+public class Moive {
+    private String name;
+    private String actor;
+    private double score;
+    private double time;
+    private double price;
+    private int number;
+    private Date starttime;
+
+    public Moive(){
+
+    }
+
+    public Moive(String name, String actor, double time, double price, int number, Date starttime) {
+        this.name = name;
+        this.actor = actor;
+        this.time = time;
+        this.price = price;
+        this.number = number;
+        this.starttime = starttime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getActor() {
+        return actor;
+    }
+
+    public void setActor(String actor) {
+        this.actor = actor;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+}
+
+
+
+
+
+
+用户类（父类）：
+
+package ha;
+
+public class User {
+    private String loginName;
+    private String userName;
+    private String password;
+    private char sex;
+    private String phone;
+    private double money;
+
+    public User(){
+
+    }
+
+    public User(String loginName, String userName, String password, char sex, String phone, double money) {
+        this.loginName = loginName;
+        this.userName = userName;
+        this.password = password;
+        this.sex = sex;
+        this.phone = phone;
+        this.money = money;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public char getSex() {
+        return sex;
+    }
+
+    public void setSex(char sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+}
+
+
+
+
+
+
+主类：
+
+package run;
+
+import ha.Business;
+import ha.Customer;
+import ha.Moive;
+import ha.User;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.Logger;
+
+public class system<customer> {
+
+    public static final List<User> ALL_USERS =  new ArrayList<>();
+
+    public static Map<Business,List<Moive>> ALL_MOIVES = new HashMap<>();
+
+    static{
+        Customer c = new Customer();
+        c.setLoginName( "zyf888");
+        c.setPassword( "123456");
+        c.setUserName("黑马刘德华");
+        c.setSex('男');
+        c.setMoney (10000);
+        c.setPhone("110110" );
+        ALL_USERS.add(c);
+
+        Customer c1 = new Customer();
+        c1.setLoginName("gzl888");
+        c1.setPassword( "123456");
+        c1.setUserName("黑马关之琳");
+        c1.setSex('女');
+        c1.setMoney(2000);
+        c1.setPhone("111111");
+        ALL_USERS.add(c1);
+
+        Business b = new Business();
+        b.setLoginName( "baozugong888" );
+        b.setPassword("123456");
+        b.setUserName("黑马包租公");
+        b.setMoney(0);
+        b.setSex('男');
+        b.setPhone( "110110" );
+        b.setAddress("火星6号2B二层");
+        b.setShopName("甜甜圈国际影城");
+        ALL_USERS.add(b);
+
+        List<Moive> moive = new ArrayList<>();
+        ALL_MOIVES.put(b,moive);
+
+        Business b2 = new Business();
+        b2.setLoginName( "baozupo888");
+        b2.setPassword("123456");
+        b2.setUserName("黑马包租婆");
+        b2.setMoney(0);
+        b2.setSex('女');
+        b2.setPhone( "110110" );
+        b2.setAddress("火星8号8B八层");
+        b2.setShopName("巧克力国际影城");
+        ALL_USERS.add(b2);
+
+        List<Moive> movie3 = new ArrayList<>();
+        ALL_MOIVES.put(b2 , movie3);
+
+    }
+
+    public static Scanner scanner = new Scanner(System.in);
+
+    public static User loginUser;
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
+
+    public static void main(String[] args) {
+        showMain();
+    }
+
+    private static void showMain(){
+        while (true) {
+            System.out.println("==========死神电影首页==========");
+            System.out.println("1. login in");
+            System.out.println("2. customer sign up");
+            System.out.println("3. business sign up");
+            System.out.println("Please scanf：");
+            String command = scanner.nextLine();
+            switch (command){
+                case "1":
+                    Login();
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                default:
+                    System.out.println("scanf error");
+            }
+        }
+    }
+
+    private static void Login(){
+        while (true) {
+            System.out.println("please scanf your name :");
+            String loginname = scanner.nextLine();
+            System.out.println("please scanf your password :");
+            String loginpassword = scanner.nextLine();
+
+            User user1 = getLoginName(loginname);
+            if(user1 != null){
+                if(user1.getPassword().equals(loginpassword)){
+                    System.out.println("login success");
+                    loginUser = user1;
+                    if(user1 instanceof Customer){
+                        System.out.println("just Customer");
+                        showCustomerMain();
+                        return;
+                    }
+                    else{
+                        System.out.println("just Business");
+                        showBusinessMain();
+                        return;
+                    }
+                }
+                else{
+                    System.out.println("loginPassword error");
+                }
+            }
+            else{
+                System.out.println("cannot find your account,please sign up first");
+            }
+        }
+    }
+
+    private static void showCustomerMain() {
+        while (true) {
+            System.out.println("============死神电影客户界面============");
+            System.out.println(loginUser.getUserName() + (loginUser.getSex() == '男' ? "先生" : "女士") + "欢迎您进入系统");
+            System.out.println("请您选择要操作的功能:");
+            System.out.println("1、展示全部影片信息功能:");
+            System.out.println("2、根据电影名称查询电影信息:");
+            System.out.println("3、评分功能:");
+            System.out.println("4、购票功能:");
+            System.out.println("5、退出系统:");
+
+            System.out.println("请输入您要操作的命令:");
+            String command = scanner.nextLine();
+            switch (command){
+                case "1":
+                    showAllMoive();
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    buyMoive();
+                    break;
+                case "5":
+                    return;
+                default:
+                System.out.println("不存在该命令!! ");
+                break;
+            }
+        }
+
+    }
+
+
+
+    private static void showBusinessMain(){
+        while (true) {
+            System.out.println("============死神电影商家界面============");
+            System.out.println(loginUser.getUserName() + (loginUser.getSex() == '男' ? "先生" : "女士") + "欢迎您进入系统");
+            System.out.println("1、展示详情:");
+            System.out.println("2、上架电影:");
+            System.out.println("3、下架电影:");
+            System.out.println("4、修改电影:");
+            System.out.println("5、退出系统:");
+
+            System.out.println("请输入您要操作的命令:");
+            String command = scanner.nextLine();
+            switch (command){
+                case "1":
+                    showBusiness();
+                    break;
+                case "2":
+                    addMoive();
+                    break;
+                case "3":
+                    deleteMoive();
+                    break;
+                case "4":
+                    updateMoive();
+                    break;
+                case "5":
+                    System.out.println(loginUser.getUserName() + "请您下次再来");
+                    return;
+                default:
+                    System.out.println("不存在该命令!! ");
+                    break;
+            }
+        }
+
+    }
+
+    private static void deleteMoive() {
+        System.out.println("============下架电影============");
+        Business business = (Business) loginUser;
+        List<Moive> moives = ALL_MOIVES.get(business);
+        if(moives.size() == 0){
+            System.out.println("无影片可下架");
+            return;
+        }
+        while (true) {
+            System.out.println("请输入要下架影片名称：");
+            String moiveName = scanner.nextLine();
+            Moive moive1 = getMoiveByname(moiveName);
+            if(moive1 != null){
+                moives.remove(moive1);
+                System.out.println("影片《" + moive1.getName() + "》下架成功");
+                return;
+            }
+            else{
+                System.out.println("没有该影片");
+                return;
+            }
+        }
+    }
+
+    private static void updateMoive() {
+        System.out.println("============修改电影============");
+        Business business = (Business) loginUser;
+        List<Moive> moives = ALL_MOIVES.get(business);
+        if(moives.size() == 0){
+            System.out.println("无影片可修改");
+            return;
+        }
+        while (true) {
+            System.out.println("请输入要修改影片名称：");
+            String moiveName = scanner.nextLine();
+
+            Moive moive1 = getMoiveByname(moiveName);
+
+            if(moive1 != null){
+                System.out.println("请您输入修改后片名:");
+                String name = scanner.nextLine();
+                System.out.println("请您输入修改后主演:");
+                String actor = scanner.nextLine();
+                System.out.println("请您输入修改后时长:");
+                String time = scanner.nextLine();
+                System.out.println("请您输入修改后票价: ");
+                String price = scanner.nextLine();
+                System.out.println("请您输入修改后票数: ");
+                String totalNumber = scanner.nextLine();
+                while (true) {
+                    try {
+                        System.out.println("请您输入影片放映时间:");
+                        String stime = scanner.nextLine();
+                        moive1.setName(name);
+                        moive1.setActor(actor);
+                        moive1.setPrice(Double.valueOf(price));
+                        moive1.setNumber(Integer.valueOf(totalNumber));
+                        moive1.setTime(Double.valueOf(time));
+                        moive1.setStarttime(sdf.parse(stime));
+                        System.out.println("影片《" + moive1.getName() + "》修改成功");
+                        return;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else{
+                System.out.println("没有该影片");
+                return;
+            }
+        }
+    }
+    
+    public static Moive getMoiveByname(String moiveName){
+        Business business = (Business) loginUser;
+        List<Moive> moives = ALL_MOIVES.get(business);
+        for (Moive moive : moives) {
+            if(moive.getName().contains(moiveName)){
+                return moive;
+            }
+        }
+        return null;
+    }
+
+    private static void addMoive() {
+        System.out.println("============上架电影============");
+        Business business = (Business) loginUser;
+        List<Moive> moives = ALL_MOIVES.get(business);
+
+        System.out.println("请您输入新片名:");
+        String name = scanner.nextLine();
+        System.out.println("请您输入主演:");
+        String actor = scanner.nextLine();
+        System.out.println("请您输入时长:");
+        String time = scanner.nextLine();
+        System.out.println("请您输入票价: ");
+        String price = scanner.nextLine();
+        System.out.println("请您输入票数: ");
+        String totalNumber = scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("请您输入影片放映时间:");
+                String stime = scanner.nextLine();
+                Moive moive1 = new Moive(name,actor,Double.valueOf(time),Double.valueOf(price)
+                        ,Integer.valueOf(totalNumber),sdf.parse(stime));
+                moives.add(moive1);
+                System.out.println("上架电影：《" + moive1.getName() + "》成功");
+                return;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private static void showBusiness() {
+        Business business = (Business) loginUser;
+        System.out.println("店名：" + business.getShopName() + "\t\t" + " 地址：" + business.getAddress() + "\t\t" + "电话：" + business.getPhone()+ "\t\t余额：" + business.getMoney());
+        List<Moive> moives = ALL_MOIVES.get(business);
+        if (moives.size() > 0) {
+            System.out.println("片名\t\t\t\t主演\t\t\t时长\t\t评分\t\t票价\t\t余票数量\t\t放映时间");
+            for (Moive moive : moives) {
+                System.out.println(moive.getName() + "\t\t\t" + moive.getActor() + "\t\t\t" + moive.getTime()
+                        + "\t\t" + moive.getScore() + "\t\t" + moive.getPrice() + "\t\t" + moive.getNumber()
+                        + "\t\t" + sdf.format(moive.getStarttime()));
+            }
+        }
+        else {
+            System.out.println("your private films's number is 0");
+        }
+    }
+
+    private static void buyMoive() {
+        showAllMoive();
+        System.out.println("============用户购票功能============");
+        while (true) {
+            System.out.println("请输入店名：");
+            String shopName = scanner.nextLine();
+
+            Business business = getUserBusinessshopName(shopName);
+            if(business == null){
+                System.out.println("无该店铺");
+            }
+            else{
+                List<Moive> movies = ALL_MOIVES.get(business);
+                if(movies.size() > 0){
+                    while (true) {
+                        System.out.println("请输入需要购买的电影名称：");
+                        String movieName = scanner.nextLine();
+                        Moive movie2 = getMovieBushopName(business,movieName);
+                        if(movie2 != null){
+                            System.out.println("请输入购买的电影票数");
+                            String number = scanner.nextLine();
+                            int num = Integer.valueOf(number);
+
+                            if(movie2.getNumber() >= num){
+                                double money = BigDecimal.valueOf(movie2.getPrice()).multiply(BigDecimal.valueOf(num)).doubleValue();
+                                if(loginUser.getMoney() >= money){
+                                    System.out.println("成功购买了 《" + movie2.getName() + "》" + num + "张票，总金额为" + money);
+                                    loginUser.setMoney(loginUser.getMoney() - money);
+                                    business.setMoney(business.getMoney() + money);
+                                    movie2.setNumber(movie2.getNumber() - num);
+                                    return;
+                                }
+                                else{
+                                    System.out.println("钱不够");
+                                    return;
+                                }
+                            }
+                            else{
+                                System.out.println("票数不够，你当前最多购买" + movie2.getNumber() + "张");
+                                return;
+                            }
+                        }
+                        else{
+                            System.out.println("无该电影");
+                        }
+                    }
+                }
+                else{
+                    System.out.println("该影院已关门");
+                    return;
+                }
+
+            }
+        }
+
+    }
+
+    private static Moive getMovieBushopName(Business business,String name) {
+        List<Moive> movies = ALL_MOIVES.get(business);
+        for (Moive movie : movies) {
+            if(movie.getName().contains(name))
+                return movie;
+        }
+        return null;
+    }
+
+    public static Business getUserBusinessshopName(String shopName){
+        Set<Business> businesses =  ALL_MOIVES.keySet();
+        for (Business business : businesses) {
+            if(business.getShopName().equals(shopName)){
+                return business;
+            }
+        }
+        return null;
+    }
+
+    private static void showAllMoive() {
+        System.out.println("============展示全部商家电影============");
+        ALL_MOIVES.forEach((business,moives)->{
+            System.out.println("店名：" + business.getShopName() + "\t\t 地址：" + business.getAddress() + "\t\t电话：" + business.getPhone() + "\t\t余额：" + business.getMoney());
+            if (moives.size() > 0) {
+                System.out.println("片名\t\t\t\t主演\t\t\t时长\t\t评分\t\t票价\t\t余票数量\t\t放映时间");
+                for (Moive moive : moives) {
+                    System.out.println(moive.getName() + "\t\t\t" + moive.getActor() + "\t\t\t" + moive.getTime()
+                            + "\t\t" + moive.getScore() + "\t\t" + moive.getPrice() + "\t\t" + moive.getNumber()
+                            + "\t\t" + sdf.format(moive.getStarttime()));
+                }
+            }
+            else {
+                System.out.println("该商家无电影");
+            }
+            System.out.println();
+        });
+    }
+
+    private static User getLoginName(String loginName){
+        for (User user : ALL_USERS) {
+            if(user.getLoginName().equals(loginName)){
+                return user;
+            }
+        }
+        return null;
+    }
+}
+
+
+
