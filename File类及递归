@@ -1,0 +1,153 @@
+
+
+File类概述
+        File类在包java.io.File下、代表操作系统的文件对象（文件、文件夹)。
+        File类提供了诸如∶定位文件，获取文件本身的信息、删除文件、创建文件（文件夹）等功能。
+
+File类对象：
+public File(String pathname)                     根据文件路径创建文件对象；
+public File(string parent，String child)         从父路径名字符串和子路径名字符串创建文件对象
+public File(Fileparent，String child)            根据父路径对应文件对象和子路径名字符串创建文件对象
+
+代码：
+File f = new File("D: \\resources \\lxueshan.jpeg");
+File f = new File("D : /resources/xueshan.jpeg " );
+File f = new File( pathname:" D:" + File.separator+"resources"+File.separator +"xueshan .jpeg");
+long size = f.length(); //是文件的字节大小
+System.out.println(size);
+
+
+File f1 = new File( pathname: "D: \\resources\\beauty.jpeg");//绝对路径
+System.out.println(f1.length();
+//相对路径:一般定位模块中的文件的。相对到工程下!!
+File f2 = new File( pathname: "file-io-app/src/data.txt");
+System.out.println(f2.length());
+
+//3、File创建对象，可以是文件也可以是文件夹
+File f3 = new File( pathname:"D : \\resources" );
+System.out.println(f3.exists());//判断这个路径是否存在，这个文件夹存在否
+
+绝对路径∶从盘符开始
+相对路径:不带盘符，默认直接到当前工程下的目录寻找文件。
+
+
+File类常用API：
+public boolean isDirectory()                       测试此抽象路径名表示的File是否为文件夹；
+System.out.println(f1.isDirectory());//false
+
+public boolean isFile()                            测试此抽象路径名表示的File是否为文件；
+System.out.println(f1.isFile()); // true
+
+public boolean exists()                            测试此抽象路径名表示的File是否存在；
+System.out.println(file.exists());
+
+public String getAbsolutePath()                     返回此抽象路径名的绝对路径名字符串；
+System.out.println(f1.getAbsolutePath());
+
+public String getPath()                             将此抽象路径名转换为路径名字符串；获取文件定义的时候使用的路径。
+System.out. println(f1.getPath());
+
+public String getName()                             返回由此抽象路径名表示的文件或文件夹的名称；
+System.out.println(f1.getName() );
+
+public long lastModified()                          返回文件最后修改的时间毫秒值；
+long time = f1.lastModified(;
+System.out.println("最后修改时间: "+ new SimpleDateFormat( pattemn: "yyyy/MM/dd HH:mm:ss").format(time));
+
+System.out.println(f1.length()); //字节大小
+
+
+
+创建文件、删除文件功能：
+public boolean createNewFile()      创建一个新的空的文件；
+public boolean mkdir()              只能创建一级文件夹；    // D:/resources/aaa
+public boolean mkdirs()             可以创建多级文件夹；    // D:/resources/ccc/ddd/eee/ffff
+public boolean delete()             删除由此抽象路径名表示的文件或空文件夹；//占用一样可以删除
+
+delete方法直接删除不走回收站;如果删除的是一个文件，且文件没有被占用则直接删除。
+delete方法默认只能删除空文件夹，不能删除非空文件夹
+
+
+File类遍历功能：
+public String[] list()                 获取当前目录下所有的"一级文件名称"到一个字符串数组中去返回。
+public File[] listFiles()        (常用)获取当前目录下所有的"一级文件对象"到一个文件对象数组中去返回(重点)。
+
+
+listFiles方法注意事项:
+        当调用者不存在时，返回null
+        当调用者是一个文件时，返回null
+        当调用者是一个空文件夹时，返回一个长度为0的数组
+        当调用者是一个有内容的文件夹时，将里面所有文件和文件夹的路径放在File数组中返回
+        当调用者是一个有隐藏文件的文件夹时，将里面所有文件和文件夹的路径放在File数组中返回，包含隐藏内容
+
+
+非规律递归（文件搜索）：
+public static void searchFile(File dir ,String fileName){
+        //3、判断dir是否是目录
+        if(dir != null && dir.isDirectory()){
+        //可以找了
+        //4、提取当前目录下的一级文件对象
+        File[ ] files = dir.listFiles(); // null[ ]
+        //5、判断是否存在一级文件对象，存在才可以遍历
+        if(files != null && files.length > 0) {
+            for (File file : files) {
+                // 6、判断当前遍历的一级文件对象是文件还是■目录
+               if(file.isFile()){
+                   //7、是不是咱们要找的，是把其路径输出即可
+                   if(file.getName().contains(fileName)){
+                   System.out.println("找到了: " + file.getAbsolutePath()) ;
+                   try {
+                       //启动
+                       Runtime r = Runtime.getRuntime();
+                       r.exec(file.getAbsolutePath());
+                   }catch (IOException e) {
+                       e.printStackTrace();
+                       }
+                   }
+               }else{
+                   // 8、是文件夹，需要继续递归寻找
+                   searchFile(file, fileName) ;
+               }
+            }
+        }else {
+        system.out.println("对不起，当前搜索的位置不是文件夹! ");
+        }
+        }
+}
+
+
+
+非规律递归（啤酒问题）：
+需求:啤酒2元1瓶，4个盖子可以换一瓶，2个空瓶可以换一瓶，请问10元钱可以喝多少瓶酒，剩余多少空瓶和盖子。
+
+
+public static int totalNumber;//总数量
+public static int lastBottleNumber; //记录每次剩余的瓶子个数
+public static int lastCoverNumber;//记录每次剩余的盖子个数
+
+public static void buy(int money){
+        // 2、看可以立马买多少瓶
+        int buyNumber = money / 2;
+        totalNumber += buyNumber;
+        //3、把盖子和瓶子换算成钱//统计本轮总的盖子数和瓶子数
+        int coverNumber = lastCoverNumber + buyNumber;
+        int bottleNumber = lastBottleNumber + buyNumber;
+        //统计可以换算的钱
+        int allMoney = 0;
+        if(coverNumber >= 4){
+        allNoney += (coverNumber / 4) * 2;
+        }
+        lastcoverNumber = coverNumber % 4;
+        if(bottleNumber >= 2){
+        allMoney t= (bottleNumber / 2)*2;
+        }
+        lastBottleNumber = bottleNumber % 2;
+        if(allMoney >= 2){
+        buy(allMoney);
+        }
+}
+
+
+
+
+
