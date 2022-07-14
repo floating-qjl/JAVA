@@ -1,0 +1,90 @@
+
+
+缓冲流概述
+        缓冲流也称为高效流、或者高级流。之前学习的字节流可以称为原始流。
+        作用:缓冲流自带缓冲区、可以提高原始字节流、字符流读写数据的性能
+
+
+缓冲流有几种?
+        字节缓冲流:
+        字节缓冲输入流:BufferedInputStream
+        字节缓冲输出流:BufferedOutputStream
+
+        字符缓冲流:
+        字符缓冲输入流:BufferedReader
+        字符缓冲输出流:BufferedWriter
+
+
+字节缓冲流:
+        字节缓冲流性能优化原理:
+        字节缓冲输入流自带了8KB缓冲池，以后我们直接从缓冲池读取数据，所以性能较好。
+        字节缓冲输出流自带了8KB缓冲池，数据就直接写入到缓冲池中去，写数据性能极高了。
+
+        字节缓冲输入流:BufferedInputStream，提高字节输入流读取数据的性能，读写功能上并无变化。
+        字节缓冲输出流:BufferedOutputStream，提高字节输出流读取数据的性能，读写功能上并无变化
+
+public BufferedInputStream(InputStream is)        可以把低级的字节输入流包装成一个高级的缓冲字节输入流管道，从而提高字节输入流读数据的性能
+public BufferedOutputStream(OutputStream os)        可以把低级的字节输出流包装成一个高级的缓冲字节输出流，从而提高写数据的性能
+
+代码：
+        InputStream is = new FileInputStream( name: "file-io-app/src/out04.txt" );
+        InputStream bis = new BufferedInputStream(is);
+
+        outputStream os = new File0utputStream( name: "file-io-app/src/out05.txt");
+        outputstream bos = new BufferedOutputstream(os);
+
+
+
+字节缓冲流性能分析：
+        使用低级的字节流按照一个一个字节的形式复制文件:慢的让人简直无法忍受。直接被淘汰。
+        使用低级的字节流按照一个一个字节数组的形式复制文件:比较慢，但是还是可以忍受的!
+
+        缓冲流一个一个字节复制:很慢，不建议使用。
+        缓冲流一个一个字节数组复制:飞快，简直太完美了
+
+
+字符缓冲输入流:
+        字符缓冲输入流:BufferedReader。
+        作用:提高字符输入流读取数据的性能，除此之外多了按照行读取数据的功能。
+
+构造器：
+public BufferedReader(Reader r)       可以把低级的字符输入流包装成一个高级的缓冲字符输入流管道，从而提高字符输入流读数据的性能
+
+字符缓冲输入流新增功能：
+public String readLine()             读取一行数据返回，如果读取没有完毕，无行可读返回null
+
+代码：
+        Reader fr = new FileReader( fileName: "file-io-app/src/data07.txt");
+        BufferedReader br = new BufferedReader(fr);//独有，不能使用多态
+
+        String line;
+        while ( (line = br.readLine()) != null){
+        System.out.println(line);
+        }
+
+
+字符缓冲输出流:
+        字符缓冲输出流:BufferedWriter。
+        作用:提高字符输出流写取数据的性能，除此之外多了换行功能
+
+构造器：
+public Bufferedwriter(Writer w)        可以把低级的字符输出流包装成一个高级的缓冲字符输出流管道，从而提高字符输出流写数据的性能
+
+方法：
+public void newLine()                 换行操作
+
+
+代码：
+        Writer fw = new FileWriter( fileName: "file-io-app/src/out08.txt"，append: true);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        bw.newLine();
+        //BufferedWriter bw = new BufferedWriter(new FileWriter( fileName:"io-app2/src/new.txt")).
+
+字符缓冲流为什么提高了操作数据的性能?
+        字符缓冲流自带8K缓冲区
+        可以提高原始字符流读写数据的性能
+
+
+
+
