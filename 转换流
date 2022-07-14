@@ -1,0 +1,47 @@
+
+
+之前我们使用字符流读取中文是否有乱码?
+        没有的，因为代码编码和文件编码都是UTF-8。
+
+如果代码编码和文件编码不一致，使用字符流直接读取还能不乱码吗?
+        会乱码。
+
+
+如果如何解决呢?
+        使用字符输入转换流
+        可以提取文件（GBK)的原始字节流，原始字节不会存在问题。
+        然后把字节流以指定编码转换成字符输入流，这样字符输入流中的字符就不乱码了
+
+
+字符输入转换流
+        字符输入转换流: InputStreamReader，可以把原始的字节流按照指定编码转换成字符输入流。
+
+构造器：
+public InputStreamReader(InputStream is)                        可以把原始的字节流按照代码默认编码转换成字符输入流。几乎不用，与默认的FileReader一样。
+public InputStreamReader(InputStream is , String charset)       可以把原始的字节流按照指定编码转换成字符输入流，这样字符流中的字符就不乱码了(重点)
+
+
+代码：
+        InputStream is = new FileInputstream( name:"D:\\resources\|data.txt");
+        Reader isr = new InputStreamReader(is);/默认以UTF-8的方式转换成字符流。还是会乱码的
+
+        Reader isr = new InputStreamReader(is , charsetName:"GBK");//以指定的GBK编码转换成字符输入流
+
+
+
+字符输出转换流
+        字符输入转换流:OutputStreamWriter，可以把字节输出流按照指定编码转换成字符输出流。
+
+public OutputStreamWriter(OutputStream os)                    可以把原始的字节输出流按照代码默认编码转换成字符输出流。几乎不用。
+public OutputStreamWriter(Outputstream os，String charset)    可以把原始的字节输出流按照指定编码转换成字符输出流(重点)
+
+
+代码：
+        OutputStream os = new FileOutputStream( name: "io-app2/src/out03.txt");
+        Writer osw = new OutputStreamWriter(os);//以默认的UTF-8写字符出去跟直接写FileWriter一样
+
+        Writer osw = new outputStreamWriter(os , charsetName:"GBK");//指定GBK的方式写字符出去
+
+
+
+
