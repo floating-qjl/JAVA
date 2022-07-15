@@ -1,0 +1,150 @@
+
+
+打印流
+        作用:打印流可以实现方便、高效的打印数据到文件中去。打印流一般是指: PrintStream，Printwriter两个类。
+        可以实现打印什么数据就是什么数据，例如打印整数97写出去就是97，打印boolean的true，写出去就是true。
+
+构造器：
+public PrintStream(OutputStream os)        打印流直接通向 字节输出流管道；
+public PrintStream( File f)                打印流直接通向文件对象；
+public PrintStream(String filepath)        打印流直接通向文件路径；
+
+方法：
+public void print(xxx xx)                 打印任意类型的数据出去
+
+代码：
+        PrintStream ps = new PrintStream(new FileOutputStream( “"io-app2/src/ps.txt"));
+        PrintStream ps = new Printstream( fileName: "io-app2/src/ps.txt");
+        ps. println(97);
+        ps.println( 'a' );
+        ps.println(23.3);
+        ps.println(true);
+        ps.println("我是打印流输出的，我是啥就打印啥");
+
+        ps.close();
+
+
+PrintWrite:
+
+构造器：
+public Printwriter(OutputStream os)            打印流直接通向字节输出流管道；
+public Printwriter (writer w)                  打印流直接通向字符输出流管道；
+public Printwriter (File f)                    打印流直接通向文件对象；
+public Printwriter (string filepath)           打印流直接通向文件路径；
+
+方法：
+public void print(Xxx xx)                     打印任意类型的数据出去
+
+在打印功能上，PrintWrite 与 PrintStream 没有区别
+
+PrintStream和PrintWriter的区别：
+        打印数据功能上是一模一样的，都是使用方便，性能高效（核心优势)
+        PrintStream继承自字节输出流OutputStream，支持写字节数据的方法。
+        PrintWriter继承自字符输出流Writer，支持写字符数据出去。
+
+        例如：ps. write( s:"我在学习!"");
+
+        若想追加数据，则必须在低级字节管道上追加
+
+
+
+输出语句重定向
+        属于打印流的一种应用，可以把输出语句的打印位置改到文件。
+
+格式：
+        PrintStream ps = new PrintStream("文件地址");
+        System.setOut(ps);
+
+
+
+
+
+
+Properties属性集对象
+        其实就是一个Map集合，但是我们一般不会当集合使用，因为HashMap更好用。
+
+Properties核心作用:
+        properties代表的是一个属性文件，可以把自己对象中的键值对信息存入到一个属性文件中去。
+        属性文件:后缀是.properties结尾的文件,里面的内容都是key=value，后续做系统配置信息的。
+
+Properties的API:
+        void load( InputStream inStream)                        从输入字节流读取属性列表（键和元素对)
+
+        void load(Reader reader)                                从输入字符流读取属性列表（键和元素对)
+
+        void store(OutputStream out,String comments)            将此属性列表（键和元素对)写入此Properties表中，
+                                                                 以适合使用load(InputStream)方法的格式写入输出字节流
+
+        void store(Writer writer, String comments)              将此属性列表（键和元素对)写入此 Properties表中，
+                                                                 以适合使用load(Reader)方法的格式写入输出字符流
+
+        public Object setProperty(String key, String value)     保存键值对(put)；
+
+        public string getProperty(String key)                   使用此属性列表中指定的键搜索属性值(get)；
+
+        public Set<String> stringPropertyNames()                所有键的名称的集合(keySet())；
+
+代码：
+        Properties properties = new Properties();
+        properties.setProperty ( "admin" ,"123456");
+        properties.setProperty("dlei", "003197");
+        properties.setProperty( "heima" ,"itcast");
+        System.out.println(properties);
+
+        参数一:保存管道 字符输出流管道
+        参数二:保存心得
+        properties.store(new FileWriter( fileName:"io-app2/src/users.properties")
+        , comments: "this is users! ! i am very happy! give me 100! ");
+
+
+        properties.load(new FileReader( fileName: "io-app2/src/users.properties"));
+        System.out.println(properties);
+        String rs = properties.getProperty("dlei");
+        System.out.println(rs);
+        String rs1 = properties.getProperty( "admin" );
+        System.out.println(rs1);
+
+
+
+
+
+IO框架：
+
+commons-io概述：
+        commons-io是apache开源基金组织提供的一组有关IO操作的类库，可以提高IO功能开发的效率。
+        commons-io工具包提供了很多有关io操作的类。有两个主要的类FileUtils,IOutils
+        此导包需要自己下载
+
+FileUtils主要有如下方法:
+        String readFileToString(File file，string encoding)       读取文件中的数据,返回字符串
+        void copyFile(File srcFile，File destFile)                复制文件。
+        void copyDirectoryToDirectory(File srcDir,File destDir)   复制文件夹。
+
+
+代码：
+        完成文件复制
+        IOUtils.copy(new FileInputStream("D : \\resources\\hushui.jpeg"),
+        new File0utputStream("D : \\resources \\hushui2.jpeg"));
+
+        完成文件复制到某个文件夹下
+        FileUtils.copgFileToDirectory(new File("D:\\resources\\hushui.jpeg"), new File("D:/"));
+
+        完成文件夹复制到某个文件夹下!
+        FileUtils.copyDirectoryToDirectory(new File("D:\\resources"), new File("D:\\new">);
+
+        删除文件夹
+        FileUtils.deleteDirectory(new File("D:\\new" ) ) ;
+
+        JDK1.7自己也做了一些一行代码完成复制的操作: New IO的技术
+        Files.copy(Path.of("D: \\resources\\hushui.jpeg"),Path.of(""D:\\resources\\hushui3.jpeg"));
+
+
+导入commons-io-2.6.jar做开发
+需求:
+        使用commons-io简化io流读写
+分析:
+        在项目中创建一个文件夹:lib
+        将commons-io-2.6.jar文件复制到lib文件夹
+        在jar文件上点右键，选择Add as Library ->点击OK
+        在类中导包使用
+
