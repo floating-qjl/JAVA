@@ -1,0 +1,49 @@
+
+
+对象序列化:
+        作用:以内存为基准，把内存中的对象存储到磁盘文件中去，称为对象序列化。
+        使用到的流是对象字节输出流:ObjectOutputStream
+
+
+对象序列化:
+        使用到的流是对象字节输出流:ObjectOutputStream
+
+构造器：
+public ObjectoutputStream(outputStream out)           把低级字节输出流包装成高级的对象字节输出流；
+
+方法：
+public final void writeobject(0bject obj)            把对象写出去到对象序列化流的文件中去
+
+
+代码：
+        ObjectoutputStream oos = new ObjectoutputStream(new FileOutputStream( name:. "io-app2/src/obj.txt"));
+        oos.write0bject(s);
+
+        对象如果要序列化，必须实现Serializable序列化接口。
+        例如：public class Student implements Serializable
+
+
+
+对象反序列化:
+        使用到的流是对象字节输入流:objectlnputStream
+        作用:以内存为基准，把存储到磁盘文件中去的对象数据恢复成内存中的对象，称为对象反序列化。
+
+构造器：
+public objectInputStream(InputStream out)              把低级字节输如流包装成高级的对象字节输入流；
+
+方法：
+public Object readObject()                             把存储到磁盘文件中去的对象数据恢复成内存中的对象返回；
+
+
+代码：
+        ObjectInputStream is = new ObjectInputStream(new FileInputStream( name:"io-app2/src/obj.txt"
+        Student s = (Student) is.read0bject();
+
+注意：
+        transient修饰的成员变量不参与序列化了，如果不想要对象的某些信息泄漏，可使用这种方法
+        例如：private transient string passWord；
+
+        申明序列化的版本号码
+        序列化的版本号与反序列化的版本号必须一致才不会出错!
+        private static final long serialVersionUID = 1;
+
