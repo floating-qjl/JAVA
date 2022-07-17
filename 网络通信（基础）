@@ -1,0 +1,135 @@
+
+
+实现网络编程关键的三要素
+        IP地址:设备在网络中的地址，是唯一的标识。
+        端口:应用程序在设备中唯一的标识。
+        协议:数据在网络中传输的规则，常见的协议有UDP协议和TCP协议。
+
+IP地址：
+        IP(Internet Protocol):全称”互联网协议地址”，是分配给上网设备的唯一标志。
+        常见的IP分类为:IPv4和IPv6
+
+IP地址
+        IPv6: 128位（ 16个字节)，号称可以为地球每一粒沙子编号。
+        IPv6分成8个整数，每个整数用四个十六进制位表示，数之间用冒号(∶）分开。
+
+
+IP地址形式:
+        公网地址、和私有地址(局域网使用)。
+        192.168.开头的就是常见的局域网地址，范围即为192.168.0.0--192.168.255.255，专门为组织机构内部使用。
+
+IP常用命令:
+        ipconfig:查看本机lP地址
+        ping IP地址:检查网络是否连通
+
+特殊IP地址:
+        本机IP:127.0.0.1或者localhost:称为回送地址也可称本地回环地址，只会寻找当前所在本机。
+
+
+
+InetAddress的使用
+        此类表示Internet协议(IP）地址。
+
+API：
+public static InetAddress getLocalHost()              返回本主机的地址对象；
+public static InetAddress getByName(String host)      得到指定主机的IP地址对象，参数是域名或者IP地址
+public string getHostName()                            获取此IP地址的主机名；
+public string getHostAddress()                         返回IP地址字符串；
+public boolean isReachable(int timeout)               在指定毫秒内连通该IP地址对应的主机，连通返回true
+
+代码：
+        //获取本机地址对象
+        InetAddress ip1 = InetAddress.getLocalHost();
+        System.out.println(ip1.getHostName());
+        System.out.println(ip1.getHostAddress());
+
+        //获取域名ip对象
+        InetAddress ip2 = InetAddress.getByName("www.baidu.com") ;
+        System.out.println(ip2.getHostName());
+        System.out.println(ip2.getHostAddress());
+
+        //获取公网IP对象
+        InetAddress ip3 = InetAddress.getByName("112.80.248.76");
+        System.out.printin(ip3.getHostName());
+        System.out.println(ip3.getHostAddress());
+
+        //判断是否能通：ping  5s之前的测试是否可通
+        System.out.println(ip3.isReachable(timeout:5000));
+
+
+
+端口号
+        端口号∶标识正在计算机设备上运行的进程（程序），被规定为一个16位的二进制，范围是0~65535。
+
+端口类型
+        周知端口:0~1023，被预先定义的知名应用占用（如:HTTP占用80，FTP占用21)
+        注册端口:1024~49151，分配给用户进程或某些应用程序。(如:Tomcat占用8080，MySQL占用3306)
+        动态端口:49152到65535，之所以称为动态端口，是因为它一般不固定分配某种进程，而是动态分配。
+
+注意:我们自己开发的程序选择注册端口，且一个设备中不能出现两个程序的端口号一样，否则出错。
+
+
+
+
+通信协议：
+        连接和通信数据的规则被称为网络通信协议
+
+网络通信协议有两套参考模型
+        OSI参考模型:世界互联协议标准，全球通信规范，由于此模型过于理想化，未能在因特网上进行广泛推广。
+        TCP/IP参考模型(或TCP/IP协议):事实上的国际标准。
+
+        OSI参考模型       TCP/IP参考模型           各层对应                   面向操作
+        应用层
+        表示层               应用层         HTTP、FTP、DNS、SMTP...   应用程序需要关注的:浏览器，
+        会话层                                                        邮箱。程序员一般在这一层开发
+
+        传输层               传输层             TCP、UDP..             选择使用的TCP，UDP协议
+
+        网络层               网络层             IP、ICMP...           封装源和目标lP，进行路径选择
+
+        数据链路层        数据链路层+物理      物理寻址、比特流.          物理设备中传输
+        物理层
+
+
+
+
+
+
+传输层的2个常见协议
+        lJCP(Transmission Control Protocol) ︰
+        传输控制协议UDP(User Datagram Protocol):用户数据报协议
+
+TCP协议特点
+        使用TCP协议，必须双方先建立连接，它是一种面向连接的可靠通信协议。
+        传输前，采用“三次握手”方式建立连接，所以是可靠的。
+        在连接中可进行大数据量的传输。
+        连接、发送数据都需要确认，且传输完毕后，还需释放已建立的连接，通信效率较低。
+
+TCP协议通信场景
+        对信息安全要求较高的场景，例如:文件下载、金融等数据通信。
+
+
+TCP三次握手确立连接：
+        客户端向服务器发出连接请求 等待服务器确认
+        服务器向客户端返回一个响应 告诉客户端收到了请求
+        客户端向服务器再次发出确认信息 连接建立
+
+TCP四次挥手断开连接：
+        客户端向服务器发出取消连接请求
+        服务器向客户端返回一个响应 表示收到客户端取消请求
+        （服务器将最后的数据处理完毕）服务器向客户端发出确认取消消息
+        客户端再次发送确认消息 连接取消
+
+
+UDP协议:·
+        UDp是一种无连接、不可靠传输的协议。
+        将数据源lP、目的地IP和端口封装成数据包，不需要建立连接
+        每个数据包的大小限制在64KB内
+        发送不管对方是否准备好，接收方收到也不确认，故是不可靠的
+        可以广播发送，发送数据结束时无需释放资源，开销小，速度快。
+
+UDP协议通信场景：
+        语音通话，视频会话等。
+
+
+
