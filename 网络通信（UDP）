@@ -1,0 +1,101 @@
+
+UDP协议的特点
+        UDP是一种无连接、不可靠传输的协议。
+        将数据源IP、目的地IP和端口以及数据封装成数据包，大小限制在64KB内，直接发送出去即可。
+
+
+
+DatagramPacket:数据包对象（韭菜盘子)
+
+构造器：
+
+public DatagramPacket(byte[] buf, int length，InetAddress address，int port)
+        创建发送端数据包对象 buf:要发送的内容，字节数组length:
+        要发送内容的字节长度address:接收端的IP地址对象port:接收端的端口号
+
+public DatagramPacket(byte[] buf， int length)
+        创建接收端的数据包对象 buf:用来存储接收的内容length:能够接收内容的长度
+
+
+
+DatagramSocket:发送端和接收端对象（人)
+
+构造器：
+public DatagramSocket()              创建发送端的Socket对象，系统会随机分配一个端口号。
+public DatagramSocket(int port)      创建接收端的Socket对象并指定端口号；
+
+方法：
+public void send(DatagramPacket dp)      发送数据包
+public void receive(DatagramPacket p)    接收数据包
+
+
+代码：
+
+//输出端
+public static void main(String[ ] args) throws Exception{
+        // 1、创建发送端对象:发送端自带默认的端口号。
+        DatagramSocket socket=new DatagramSocket();
+
+        //2、创建一个数据包对象封装数据（韭菜盘子)
+        byte[] buffer ="我是一颗快乐的韭菜，你愿意吃吗? ".getBytes();
+        DatagramPacket packet = new DatagramPacket(bufffer,buffer.length,
+                                                   InetAddress.getLocalHost(),8888);
+
+        //3、发送数据
+        socket.send(packet);
+
+        socket.close();
+
+}
+
+//接收端
+public static void main(String[] args) throw Exception{
+        // 1、创建接收端对象:注册端口（人)
+        DatagramSocket socket = new DatagramSocket( port: 8888);
+
+        //2、创建一个数据包对象接收数据（韭菜盘子)
+        byte[ ] buffer = new byte[1024 * 64];
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+        //3、等待接收数据
+        socket.receive(packet);
+
+        //4、取出数据即可
+        //读取多少倒多少
+        int len = packet.getlength();
+        String rs = new String(buffer,0,len);
+        System.out.println("收到了：" + rs);
+
+        socket.close();
+}
+
+
+
+UDP的接收端为什么可以接收很多发送端的消息?
+        接收端只负责接收数据包，无所谓是哪个发送端的数据包.
+
+
+UDP通信-广播、组播
+        UDP的三种通信方式
+        单播:单台主机与单台主机之间的通信。
+        广播:当前主机与所在网络中的所有主机通信。组播:当前主机与选定的一组主机的通信。
+
+UDP如何实现广播？
+        使用广播地址:255.255.255.255
+        具体操作:
+          发送端发送的数据包的目的地写的是广播地址、且指定端口。(255.255.255.255 , 9999)
+          本机所在网段的其他主机的程序只要匹配端口成功即就可以收到消息了。(9999)
+
+UDP如何实现组播
+        使用组播地址:224.0.0.0 ~ 239.255.255.255
+        具体操作:
+          发送端的数据包的目的地是组播IP（(例如:224.0.1.1，端口:9999)
+          接收端必须绑定该组播IP(224.0.1.1)，端口还要对应发送端的目的端口9999，这样即可接收该组播消息。
+          DatagramSocket的子类MulticastSocket可以在接收端绑定组播lP。
+
+代码：
+//把当前接收端加入到一个组播组中去:绑定对应的组播消息的组插IP
+        socket.joinGroup(new InetSocketAddress(InetAddress.getBuName("224.0.1.1"),port 9999),
+        NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
+
+
