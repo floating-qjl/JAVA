@@ -1,0 +1,192 @@
+
+
+TCP协议回顾:
+        TCP是一种面向连接，安全、可靠的传输数据的协议
+        传输前，采用“三次握手”方式，点对点通信，是可靠的
+        在连接中可进行大数据量的传输
+
+注意:在java中只要是使用java.net.Socket类实现通信，底层即是使用了TCP协议
+
+
+Socket:
+
+构造器：
+public Socket(String host , int port)     创建发送端的Socket对象与服务端连接，参数为服务端程序的ip和端口。
+
+
+方法：
+OutputStream getOutputStream()    获得字节输出流对象
+
+InputStream getInputStream()      获得字节输入流对象
+
+
+代码：
+        //1、创建Socket通信管道请求有服务端的连接
+        // public Socket(String host, int port)
+        // 参数一:服务端的IP地址
+        // 参数二:服务端的端口
+        Socket socket = new Socket( host "127.0.0.1"，port: 7777);
+
+        //2、从socket通信管道中得到一个字节输出流负责发送数据
+        OutputStream os = socket.get0utputStream();
+
+        //3、把低级的字节流包装成打印流
+        PrintStream ps = new PrintStream(os);
+
+        //4、发送消息
+        ps. println("我是TCP的客户端,我已经与你对接，并发出邀请");//发一行消息，服务器代码才能接收
+        ps.flush();
+
+        //关闭资源
+        socket.close();
+
+
+
+
+
+
+ServerSocket(服务端):
+
+构造器：
+public ServerSocket(int port)       注册服务端端口
+
+
+方法：
+public Socket accept()        等待接收客户端的Socket通信连接，
+                               连接成功返回socket对象与客户端建立端到端通信
+
+代码：
+        // 1、注册端口
+        serverSocket serverSocket = new ServerSocket( port: 7777);
+        //2、必须调用accept方法:等待接收客户端的Socket连接请求，建立Socket通信管道
+        Socket socket = serverSocket.accept();
+        //3、从socket通信管道中得到一个字节输入流
+        InputStream is = socket.getInputStream();
+        //4、把字节输入流包装成缓冲字符输入流进行消.息的接收
+        BufferedReader br = new BufferedReader(new InputstreamReader(is));
+        //5、按照行读取消息
+        String msg;
+        while((msg = br.readLine()) != null){
+            System.out.println(socket.getRemoteSocketAddress() + "说了：" + msg);
+        }
+
+
+TCP通信的基本原理?
+        客户端怎么发，服务端就应该怎么收。
+        客户端如果没有消息，服务端会进入阻塞等待。
+        Socket一方关闭或者出现异常、对方Socket也会失效或者出错。
+
+
+
+
+
+
+本案例实现了多发多收和一发一收，那么是否可以同时接收多个客户端的消息?
+        不可以的。
+        因为服务端现在只有一个线程，只能与一个客户端进行通信。
+
+
+客户端修改：
+
+主类：
+        // 1、注册端口
+        ServerSocket serverSocket = new ServerSocket( port: 7777);
+        //定义一个死循环由主线程负责不断的接收客户端的Socket管道连接
+        while(true){
+            //2、每接收到一个客户端的Socket管道，交给一个独立的子线程负责读取消息
+            Socket socket = serverSocket.accept();
+
+            System.out.println(socket.getRemoteSocketAddress() + "上线了!!!");
+
+            //3、开始创建独立线程处理socket
+            new ServerReaderThread(socket).start();
+
+        }
+
+线程类：
+        //修改 run 方法
+        @Override
+        public void run() {
+            try {
+                //3、从socket通信管道中得到一个字节输入流
+                InputStream is = socket.getInputStream();
+                //4、把字节输入流包装成缓冲字符输入流进行消息的接收
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                //5、按照行读取消息
+                String msg;
+                while ((msg = br.readLine()) != null){
+                    System.out.println(socket.getRemoteSocketAddress()+"说了:"+msg);
+                }
+            }catch Exception e){
+                 System.out.println(socket.getRemoteSocketAddress() + "下线了!!! ");
+            }
+        }
+
+
+本次是如何实现服务端接收多个客户端的消息的。
+        主线程定义了循环负责接收客户端Socket管道连接
+        每接收到一个Socket通信管道后分配一个独立的线程负责处理它。
+
+
+
+
+
+
+
+目前的通信架构存在什么问题?
+        客户端与服务端的线程模型是:N-N的关系。资源会很快耗尽，占用内存过大
+        可以使用线程池优化
+
+
+
+线程池优化：
+
+主类：
+
+        //使用静态变量记住一个线程对象
+        private static ExecutorService pool = new ThreadPoolExecutor(3,5,6,TimeUnit.SECONDS
+        ，new ArrayBlockingQueve<>(2),Executors.defaultThreadFactory()，new ThreadPoolExecutor.AbortPolicy());
+
+
+        //注册端口
+        ServerSocket serverSocket = new ServerSocket( port: 7777);
+        //定义一个死循环由主线程负责不断的接收客户端的Socket管道连接
+        while(true){
+        //2、每接收到一个客户端的Socket管道，交给一个独立的子线程负责读取消息
+        Socket socket = serverSocket.accept();
+        System.out.println(socket.getRemoteSocketAddress() + "上线了!!!");
+        pool.execute(new SeverReaderRunnable(socket));
+        }
+
+
+
+
+SeverReaderRunnable类：
+
+private Socket socket；
+//构造器。。。。
+
+//修改 run 方法
+@Override
+public void run() {
+        try {
+        //3、从socket通信管道中得到一个字节输入流
+        InputStream is = socket.getInputStream();
+        //4、把字节输入流包装成缓冲字符输入流进行消息的接收
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        //5、按照行读取消息
+        String msg;
+        while ((msg = br.readLine()) != null){
+        System.out.println(socket.getRemoteSocketAddress()+"说了:"+msg);
+        }
+        }catch Exception e){
+        System.out.println(socket.getRemoteSocketAddress() + "下线了!!! ");
+        }
+        }
+
+
+本次使用线程池的优势在哪里?
+        服务端可以复用线程处理多个客户端，可以避免系统瘫痪。
+        适合客户端通信时长较短的场景。
+
+
