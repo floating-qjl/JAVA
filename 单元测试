@@ -1,0 +1,78 @@
+
+import org.junit.Assert;
+import org.junit.Test;单元测试
+        单元测试就是针对最小的功能单元编写测试代码，Java程序最小的功能单元是方法，
+        因此，单元测试就是针对Java方法的测试，进而检查方法的正确性。
+
+目前测试方法是怎么进行的，存在什么问题
+        只有一个main方法，如果一个方法的测试失败了，其他方法测试会受到影响。
+        无法得到测试的结果报告，需要程序员自己去观察测试是否成功。
+
+Junit单元测试框架
+        JUnit是使用Java语言实现的单元测试框架，它是开源的，Java开发者都应当学习并使用JUnit编写单元测试。
+        此外，几乎所有的IDE工具都集成了JUnit，这样我们就可以直接在IDE中编写并运行JUnit测试，JUnit目前最新版本是5。
+
+JUnit优点
+        JUnit可以灵活的选择执行哪些测试方法，可以一键执行全部测试方法。
+        Junit可以生成全部方法的测试报告。
+        单元测试中的某个方法测试失败了，不会影响其他测试方法的测试。
+
+
+
+
+步骤：
+        将JUnit的jar包导入到项目中
+        编写测试方法:该测试方法必须是公共的无参数无返回值的非静态方法。
+        在测试方法上使用@Test注解:标注该方法是一个测试方法
+        在测试方法中完成被测试方法的预期正确性测试。
+        选中测试方法，选择“JUnit运行”，如果测试良好则是绿色;如果测试失败，则是红色
+
+
+代码：
+class File{
+
+    @Test
+    public void test(){
+        //定义一个工作类，并新建对象
+        UserService userService = new UserService();
+        String rs = userService.loginName("admin","123456");
+        //进行预期结果的正确性测试：断言
+        Assert.assertEquals("您的登陆业务可能出现问题","登录成功");
+    }
+}
+
+public class UserService{
+            public String loginNama(String loginName,String password){
+                if("admin".equals(loginName) && "123456".equals(password)){
+                    return "登录成功";
+                }else{
+                    return "用户名或密码有误";
+                }
+            }
+}
+
+
+
+Junit常用注解(Junit 4.xXXx版本):
+
+@Test
+测试方法
+
+@Before
+用来修饰实例方法，该方法会在每一个测试方法执行之前执行一次。
+
+@After
+用来修饰实例方法，该方法会在每一个测试方法执行之后执行一次。
+
+@BeforeClass
+用来静态修饰方法，该方法会在所有测试方法之前只执行一次。
+
+@AfterClass
+用来静态修饰方法，该方法会在所有测试方法之后只执行一次。
+
+开始执行的方法:初始化资源。
+执行完之后的方法:释放资源。
+
+
+
+
