@@ -1,0 +1,82 @@
+
+
+动态代理：
+
+什么是代理?
+        代理指:某些场景下对象会找一个代理对象，来辅助自己完成一些工作，如:歌星〈经济人)，买房的人（房产中介)。
+
+代理主要是对对象的行为额外做一些辅助操作。
+
+如何创建代理对象：
+        Java中代理的代表类是: java.lang.reflect.Proxy R
+        Proxy提供了一个静态方法，用于为对象产生一个代理对象返回。
+
+public static Object newProxyInstance(ClassLoader loader，  加载器
+                       Class<?>[] interfaces，      对象实现的接口列表
+                       InvocationHandler h)         处理方法
+
+参数一:定义代理类的类加载器。
+参数二:代理类要实现的接口列表。
+参数三:将方法调用分派到的处理程序。(代理对象的核心处理程序)
+
+
+
+代码：
+//以明星及其代理人为例
+//先创建接口，再创建明星类继承接口（不然无法使用代理）
+//下述代码为代理人类的部分代码，返回值为 接口类，即代理人对象类型为接口类型
+public static Skill getProxy(Star obj){
+        return (Skill) Proxy.newProxyInstance(obj.getClass().getClassLoader()，
+                obj.getclass().getInterfaces(),new InvocationHandler() {
+                    @Override
+                    public 0bject invoke(Object proxy，Method method,Object[] args) throws Throwable{
+                        //method 正在调用的方法对象
+                        //args代表这个方法的参数。
+                        Object rs = method.invoke(obj,args);
+
+                        return rs;
+                    }
+                });
+}
+
+
+通过代理对象调用方法，执行流程是什么样的?
+        先走向代理
+        代理可以为方法额外做一些辅助工作。
+        开发真正触发对象的方法的执行。
+        回到代理中，由代理负责返回结果给方法的调用者。
+
+
+
+
+
+
+功能实现：
+需求：
+        模拟某企业用户管理业务，需包含用户登录，用户删除，用户查询功能，并要统计每个功能的耗时。
+分析：
+        定义一个UserService表示用户业务接口，规定必须完成用户登录，用户删除，用户查询功能。
+        定义一个实现类UserServicelmpl实现UserService，并完成相关功能，且统计每个功能的耗时。
+        定义测试类，创建实现类对象，调用方法。
+
+
+本案例存在哪些问题?
+        答:业务对象的的每个方法都要进行性能统计，存在大量重复的代码。
+
+
+动态代理的优点
+        可以在不改变方法源码的情况下，实现对方法功能的增强，提高了代码的复用。
+        简化了编程工作、提高了开发效率，同时提高了软件系统的可扩展性，。
+        可以为被代理对象的所有方法做代理。
+        非常的灵活，支持任意接口类型的实现类对象做代理，也可以直接为接本身做代理。
+
+泛型：
+public static <T> T getProxy(T obj){
+        return(T)Proxy.newProxyInstance(obj.getclass().getClassLoader(),
+        obj.getclass().getInterfaces(),new InvocationHandler(){
+            @0verride
+            public Object invoke(Object proxy，Method method,Object[]args)throws Throwable{
+            }
+        });
+}
+
