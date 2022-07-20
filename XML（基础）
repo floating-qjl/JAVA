@@ -1,0 +1,196 @@
+
+
+XML概述:
+        XML是可扩展标记语言(eXtensible Markup Language)的缩写，它是一种数据表示格式，可以描述非
+        常复杂的数据结构，常用于传输和存储数据。
+
+XML的几个特点和使用场景:
+        一是纯文本，默认使用UTF-8编码;二是可嵌套;
+        如果把XML内容存为文件，那么它就是一个XML文件。
+        XML的使用场景:XML内容经常被当成消息进行网络传输，或者作为配置文件用于存储系统的信息。
+
+
+XML的创建
+        就是创建一个XML类型的文件，要求文件的后缀必须使用xml，如hello_world.xml
+
+
+XML的语法规则:
+        XML文件的后缀名为:xml
+        文档声明必须是第一行
+        <?xml version="1.0" encoding="UTF-8"?>
+        version: XML默认的版本号码、该属性是必须存在的
+        encoding:本XML文件的编码
+
+
+XML的标签(元素)规则:
+        标签由一对尖括号和合法标识符组成:<name></name>，必须存在一个根标签，有且只能有一个。
+        标签必须成对出现，有开始，有结束:<name></name>
+        特殊的标签可以不成对，但是必须有结束标记，如:<br/>
+        标签中可以定义属性，属性和标签名空格隔开,属性值必须用引号引起来<student id = “1" ></name>
+        标签需要正确的嵌套
+
+例如：
+       <student id="1">
+       <name>张三</name>
+       </student>
+
+
+XML的其他组成：
+        XML文件中可以定义注释信息:<!-注释内容-->
+        XML文件中可以存在以下特殊字符：
+        &lt;   <    小于
+        &gt;   >    大于
+        &amp;  &    和号。
+        &apos; '   单引号
+        &quot; "   引号
+        XML文件中可以存在CDATA区:<![CDATA[ ...内容...]]>
+
+
+
+
+
+
+
+
+代码：
+<?xml version="1.0"encoding="UTF-8"?>
+<!--注释:根标签有且仅能有一个 -->
+<student>
+    <name>女儿国王</name>
+    <sex>女</sex>
+    <hobby>唐僧，追唐僧</ hobby>
+    <info>
+        <age>30</age>
+        <addr>女儿国</addr>
+    </info>
+    <sql>
+        select * from user where age &lt; 18;
+        select * from user where age &lt; 18;&amp;&amp; age > 10;
+        <![CDATA[
+            select * from user where age < 18;
+        ]]>
+    </sql>
+</student>
+
+
+
+
+
+
+
+
+
+
+
+文档约束：
+        问题:由于XML文件可以自定义标签，导致XML文件可以随意定义，程序在解析的时候可能出现问题。
+        文档约束:是用来限定xml文件中的标签以及属性应该怎么写。
+        以此强制约束程序员必须按照文档约束的规定来编写xml文件。
+
+文档约束的分类：
+        DTD
+        schema
+
+
+
+XML文档约束-DTD的使用
+        需求:利用DTD文档约束，约束一个XML文件的编写。
+        分析:
+        编写DTD约束文档，后缀必须是.dtd
+          <!ELEMENT书架(书+)>
+          <!ELEMENT书(书名,作者,售价)>
+          <!ELEMENT书名(#PCDATA)>
+          <!ELEMENT作者(#PCDATA)>
+          <!ELEMENT售价(#PCDATA)>
+
+        在需要编写的XML文件中导入该DTD约束文档
+        按照约束的规定编写XML文件的内容。
+
+代码：
+<?xml version="1.0" encoding="UTF-8"?>
+<! DOCTYPE书架SYSTEM "data.dtd">
+<书架>
+    <书>
+        <书名>精通JavaSE加强</书名>
+        <作者>dlei</作者>
+        <售价>很贵</售价>
+    </书>
+    <书>
+        <书名></书名>
+        <作者></作者>
+        <售价></售价>
+    </书>
+    <书>
+        <书名></书名>
+        <作者></作者>
+        <售价></售价>
+    </书>
+</书架>
+
+
+
+
+
+
+
+文档约束-schema
+        schema可以约束具体的数据类型，约束能力上更强大。
+        schema本身也是一个xmil文件，本身也受到其他约束文件的要求，所以编写的更加严谨
+        schema文件用来约束一个xml文件同时也被别的文件约束着
+
+
+XML文档约束-schema的使用:
+        需求:利用schema文档约束，约束一个XML文件的编写。
+        分析:
+        编写schema约束文档，后缀必须是.xsd，具体的形式到代码中观看。
+        在需要编写的XML文件中导入该schema约束文档
+        按照约束内容编写XML文件的标签。
+
+配置：
+<?xml version="1.0"encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.itcast.cn"
+        elementFormDefault="qualified" >
+    <!-- targetNamespace :申明约束文档的地址〈命名空间)-->
+    <element name="书架'>
+        <!--写子元素-->
+        <complexType>
+            <!-- max0ccurs= 'unbounded': 书架下的子元素可以有任意多个!-->
+            <sequence max0ccurs= 'unbounded'>
+                <element name='书'>
+                    <complexType>
+                        <sequence>
+                            <element name='书名' type= 'string'/>
+                            <element name='作者’type='string'/>
+                            <element name='售价’type='double'/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+</schema>
+
+
+代码：
+<?xml version="1.0" encoding="UTF-8" ?>
+<书架 xmlns="http://www.itcast.cn"
+    xmlns:xsi="http: //www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.itcast.cn data.xsd">
+    <!-- xmins="http://www.itcast.cn”基本位置
+        xsi:schemaLocation="http;//www.itcast.cn books02.xsd" 具体的位置-->
+    <书>
+        <书名>神雕侠侣</书名>
+        <作者>金庸</作者>
+        <售价>399.9</售价>
+    </书>
+    <书>
+        <书名>神雕侠侣</书名>
+        <作者>金庸</作者>
+        <售价>19.5</售价>
+    </书>
+</书架>
+
+
+在 mybatis 官网，会有配置文件
+
