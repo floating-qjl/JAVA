@@ -1,0 +1,286 @@
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;XML解析技术：
+
+XML的数据的作用是什么，最终需要怎么处理?
+        存储数据、做配置信息、进行数据传输。
+        最终需要被程序进行读取，解析里面的信息。
+
+什么是XML解析：
+        使用程序读取XML中的数据
+
+两种解析方式：
+        SAX解析
+        DOM解析
+
+Dom常见的解析工具：
+JAXP
+        SUN公司提供的一套XML的解析的API
+
+JDOM
+        JDOM是一个开源项目，它基于树型结构，利用纯JAVA的技术对XML文档实现解析、生成、序 列化以及多种操作。
+
+dom4j
+        是JDOM的升级品，用来读写XML文件的。具有性能优异、功能强大和极其易使用的特点，它
+        的性能超过sun公司官方的dom 技术，同时它也是一个开放源代码的软件，Hibernate也用它来读写配置文件。
+
+jsoup
+        功能强大DOM方式的XML解析开发包，尤其对HTML解析更加方便
+
+
+Document对象:整个xml文档
+Element对象:标签
+Attribute对象:属性
+Text对象:文本内容
+
+
+
+使用Dom4]J解析出XML文件：
+        需求:
+        使用Dom4]把一个XML文件的数据进行解析
+        分析:
+        下载Dom4j框架，官网下载。
+        在项目中创建一个文件夹:lib
+        将dom4j-2.1.1.jar文件复制到lib文件夹
+        在jar文件上点右键，选择Add as Library ->点击OK在类中导包使用
+
+
+Dom4j解析XML-得到Document对象
+
+SAXReader类构造器/方法:
+public SAXReader()           创建Dom4J的解析器对象；
+Document read(String url)     加载XML文件成为Document对象
+
+Document类方法：
+Element getRootElement()      获得根元素对象
+
+
+代码：
+        //1、创建一个Dom4j的解析器对象，代表了整个dom4j框架
+        SAXReader saxReader = new SAXReader();
+        //2、把XHL文件加载到内存中成为一个Document文档对象
+        //Document document = saXReader .read(new File("xml-app\\src\\Contacts.xml"));//需要通过模块名去定位
+        //Document document = saxReader .read(new FileInputStream("xml-app\\src\\Contacts.xml" ));
+
+        //注意: getResourceAsStream中的/是直接去src下寻找的文件
+        InputStream is = Dom4JHelloWorldDemo1.class.getResourceAsStream("/Contacts.xml");
+        Document document = saxReader.read(is)；
+
+        // 3、获取根元素对象
+        Element root = document.getRootElement();
+        System.out.println(root.getName());
+
+
+
+
+
+Dom4j解析XML的元素、属性、文本:
+        List<Element> elements()                得到当前元素下所有子元素；
+        List<Element> elements(String name)     得到当前元素下指定名字的子元素返回集合
+        Element element(String name)            得到当前元素下指定名字的子元素,如果有很多名字相同的返回第一个
+        String getName()                        得到元素名字
+        String attributeValue(String name)      通过属性名直接得到属性值
+        String elementText(子元素名)            得到指定名称的子元素的文本
+        String getText()                        得到文本；
+
+
+        //接上一节代码
+        //4、拿根元素下的全部子元素对象(一级)
+        // List<Element> sonEles = root.elements() ;
+        List<Element> sonEles = root.elements( s: "contact")；
+        for (Element sonEle : sonEles){
+            System.out.println(sonEle.getName());
+        }
+        //拿某个子元素
+        Element userEle = root.element("user");
+        System.out.println(userEle.getName());
+        //默认提取第一个子元素对象
+        Element contact = root.element("contact" );
+        //获取子元素文本
+        System.out.println(contact.elementText("name"));
+        //去掉前后空格
+        System.out.println(contact.elementTextTrim("name"));
+        //根据元素获取属性值
+        Attribute idAttr = contact.attribute("id");
+        System.out.println(idAttr. getName() + "-->" + idAttr.getvalue());
+        //直接提取属性值
+        System.out.println(contact.attributeValue("id"));
+        System.out.println(contact.attributevalue("vip"));
+
+        //获取当前元素下的子元素对象
+        Element email = contact.element("email");
+        System.out.println(email.getText());
+
+
+
+
+
+
+案例：
+        需求:解析XHL中的数据成为一个List集合对象。
+
+//建立对象类Contact，定义变量，构造器，toString、getter和setter等
+
+//主类
+public class File{
+    @Test
+    public void parseToList() throws Exception {
+        //需求:解析XML中的数据成为一个List集合对象。
+        // 1、导入框架（做过)
+        // 2、创建SaxReader对象
+        SAXReader saxReader = new SAXReader();
+        // 3、加载XML文件成为文档对象Document对象。
+        Document document = saxReader.read(
+                File.class.getResourceAsStream("/logback.xml"));
+        // 4、先拿根元素
+        Element root = document.getRootElement();
+        // 5、提取contact子元素
+        List<Element> contactEles = root.elements("contact");
+        // 6、准备一个ArrayList集合封装联系人信息
+        List<Contact> contacts = new ArrayList<>();
+        //7、遍历Contact子元素
+        for (Element contactEle : contactEles) {
+            //8、每个子元素都是一个联系人对象
+            Contact contact = new Contact();
+            Contact.setId(Integer.valueOf(contactEle.attributeValue("id")));
+            Contact.setVip(Boolean.value0f(contactEle.attributeValue("vip")));
+            Contact.setName(contactEle.elementTextTrim("name"));
+            Contact.setGender(contactEle.elementTextTrim( "gender").charAt(0));
+            Contact.setEmail(contactEle.elementText("email"));
+            //9、把联系人对象数据加入到List集合
+            contacts.add(contact);
+        }
+        //10、遍历List集合
+        for (Contact contact : contacts) {
+            System.out.println(contact);
+        }
+    }
+}
+
+
+如果需要从XML文件中检索需要的某个信息（如name)怎么解决?
+        Dom4j需要进行文件的全部解析，然后再寻找数据。
+        Xpath技术更加适合做信息检索。
+
+
+
+XPath介绍:
+        XPath在解析XML文档方面提供了一独树一帜的路径思想，更加优雅，高效
+        XPath使用路径表达式来定位XML文档中的元素节点或属性节点。
+
+示例:
+        /元素/子元素/孙元素
+
+
+使用Xpath检索出XML文件
+        需求:
+        使用Dom4J把一个XML文件的数据进行解析
+        分析:
+        导入jar包(dom4j和jaxen-1.1.2.jar)，Xpath技术依赖Dom4j技术
+        通过dom4j的SAXReader获取Document对象
+        利用XPath提供的APl,结合XPath的语法完成选取XML文档元素节点进行解析操作。
+
+Document中与Xpath相关的APl如下:
+        Node selectSingleNode("表达式")         获取符合表达式的唯一元素。
+        List<Node> selectNodes("表达式")        获取符合表达式的元素集合。
+
+ Xpath的四大检索方案:
+        绝对路径             /根元素/子元素/孙元素
+        相对路径             ./子元素/孙元素
+        全文检索             //contact
+        属性查找             //@属性名、//元素[@属性名]、//元素//[@属性名='值']
+
+
+
+
+
+        代码：
+
+class XpathDemo{
+    //1.绝对路径:/根元素/子元素/子元素。
+    @Test
+    public void parse01() throws Exception {
+        // a、创建解析器对象
+        SAXReader saxReader = new SAXReader();
+        // b、把XML加载成Document文档对象
+        Document document =
+                saxReader.read(XPathDemo.class.getResourceAsStream("/logback.xml"));
+        // c、检索全部的名称
+        List<Node> nameNodes = document.selectNodes("/contactList/contact/name");
+        for (Node nameNode : nameNodes) {
+            Element nameEle = (Element) nameNode;
+            System.out.println(nameEle.getTextTrim());
+        }
+    }
+
+    //2.相对路径: ./子元素/子元素。         ( .代表了当前元素)
+    @Test
+    public void parse02() throws Exception {
+        // a、创建解析器对象
+        SAXReader saxReader = new SAXReader();
+        // b、把XML加载成Document文档对象
+        Document document =
+                saxReader.read(XPathDemo.class.getResourceAsStream("/logback.xml"));
+        // c、检索全部的名称
+        List<Node> nameNodes = document.selectNodes("./contact/name");
+        for (Node nameNode : nameNodes) {
+            Element nameEle = (Element) nameNode;
+            System.out.println(nameEle.getTextTrim());
+        }
+    }
+    //3.全文搜索:
+    //  元素            在全文找这个元素
+    //  元素1/元素2     在全文找元素1下面的一级元素2
+    //  元素1//元素2    在全文找元素1下面的全部元素2
+    @Test
+    public void parse03() throws Exception {
+        // a、创建解析器对象
+        SAXReader saxReader = new SAXReader();
+        // b、把XML加载成Document文档对象
+        Document document =
+                saxReader.read(XPathDemo.class.getResourceAsStream("/logback.xml"));
+        // c、检索全部的名称
+        // List<Node> nameNodes = document.selectNodes("//name");
+        // List<Node> nameNodes = document.selectNodes("//contact/name");
+        List<Node> nameNodes = document.selectNodes("//contact//name");
+        for (Node nameNode : nameNodes) {
+            Element nameEle = (Element) nameNode;
+            System.out.println(nameEle.getTextTrim());
+        }
+    }
+
+    //4.属性查找。
+    //@属性名称             在文检索属性对象。
+    //元素[@属性名称]       在全文检索包含该属性的元素对象。
+    //元素[@属性名称=值]    在全文检索包含该属性的元素且属性值为该值的元素对象。
+
+
+    @Test
+    public void parse04() throws Exception {
+        // a、创建解析器对象
+        SAXReader saxReader = new SAXReader();
+        // b、把XML加载成Document文档对象
+        Document document =
+                saxReader.read(XPathDemo.class.getResourceAsStream("/logback.xml"));
+        // c、检索全部的名称
+        List<Node> nameNodes = document.selectNodes("//@id");
+        for (Node nameNode : nameNodes) {
+            Element nameEle = (Element) nameNode;
+            System.out.println(nameEle.getTextTrim());
+        }
+        //查询name元素(包含id属性的>
+        //Node node = document.selectSingleNode("//name[@id]");
+        Node node = document.selectSingleNode("//name[@id=888]");
+        Element ele = (Element) node;
+        System.out.println(ele.getTextTrim());
+    }
+}
+
+
