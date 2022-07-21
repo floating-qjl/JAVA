@@ -1,0 +1,129 @@
+
+设计模式 --- 工厂模式：
+
+什么是工厂设计模式?
+        之前我们创建类对象时,都是使用new对象的形式创建,在很多业务场景下也提供了不直接new的方式。
+
+工厂模式（Factory Pattern）是Java中最常用的设计模式之一，这种类型的设计模式属于创建型模式，
+它提供了一种获取对象的方式
+
+
+工厂设计模式的作用:
+        工厂的方法可以封装对象的创建细节，比如:为该对象进行加工和数据注入。
+        可以实现类与类之间的解耦操作（核心思想）。//只需要更改工厂内部设计即可
+
+
+
+
+
+代码：
+// 创建电脑类作为父类，再创建Mac类、Huawei类等子类 extends 继承电脑类，并重写方法
+
+//创建工厂类，静态方法帮你new对象
+public static Computer createComputer(String info){
+        switch (info){
+        case "huawei":
+            Computer c = new Huawei();
+            c.setName( "huawei pro 16" )；
+            c.setPrice(5999);
+            return c;
+        case "mac" :
+            Computer c2 = new Mac();
+            c2.setName( "HacBook pro" );
+            c2.setPrice(11999);
+            return c2;
+        default:
+            return null;
+        }
+}
+
+ //主类 --- 工厂模式
+
+public class File{
+    public static void main(String[] args) {
+        Computer c1 = Factory.createComputer("huawei");
+        c1.start();
+
+        Computer c2 = Factory.createComputer("mac");
+        c2.start();
+    }
+}
+
+
+
+
+
+
+
+
+设计模式 --- 装饰设计模式：
+
+什么是装饰设计模式？
+        创建一个新类，包装原始类，从而在新类中提升原来类的功能。
+
+装饰设计模式的作用:
+        作用:装饰模式指的是在不改变原类的基础上,动态地扩展一个类的功能。
+
+        InputStream(抽象父类)
+        FileInputstream(实现子类，读写性能较差)
+        BufferedInputStream(实现子类，装饰类，读写性能高)
+
+        定义父类。
+        定义原始类，继承父类，定义功能。
+        定义装饰类，继承父类，包装原始类，增强功能!!
+
+
+//共同父类
+public abstract class InputStream{
+        public abstract int read();
+        public abstract int read(byte[] buffer);
+}
+
+//原始类
+public class FileInputStream extends InputStream {
+    @Override
+    public int read() {
+        System.out.println("低性能的方式读取了一个字节a");
+        return 97;
+    }
+
+    @Override
+    public int read(byte[] buffer) {
+        buffer[0] = 97;
+        buffer[1] = 98;
+        buffer[2] = 99;
+        System.out.println("低性能的方式读取了一个字节数组: " + Arrays.toString(buffer));
+        return 3;
+    }
+}
+
+//装饰类
+public class..BufferedInputStream extends InputStream{
+    private InputStream is;
+    public BufferenInputStream(InputStream is){
+        this.is = is;
+    }
+
+    @0verride
+    public int read(){
+        System.out.println("提供8KB的缓冲区，提高读数据性能~~~~" );
+        return is.read();
+    }
+
+    @Override
+    public int read(byte[] buffer){
+        System.out.println("提供8KB的缓冲区，提高读数据性能~~~~");
+        return is.read(buffer);
+    }
+}
+
+
+//主类
+public class File{
+    public static void main(String[] args) {
+        InputStream is = new BufferedInputStream(new FileInputStream());
+        System.out.println(is.read());
+        System.out.println(is.read(new byte[1024]));
+
+    }
+}
