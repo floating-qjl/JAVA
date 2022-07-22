@@ -11,7 +11,7 @@ public class hehe {
         System.out.println(" 请输入：");
         String name = sc.next();
         
-        if(name == a)//比较地址，a位于常量池，name位于普通堆区，一定是false
+        if(name == a)//比较地址，a位于常量池，name位于普通堆区，一定是false，因为scanner输入并没有双引号
             System.out.println("你错啦");
             
         if(a.equals(name))//只关心字符内容是否一样
