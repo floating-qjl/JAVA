@@ -25,7 +25,7 @@ Objects类与Object还是继承关系，Objects类是从JDK1.7开始之后才有
 对于官方给出的equals方法中并没有对象自己的equals方法，而是选择了Objects的queals方法来比较两个对象
 例如：Objects.equals(name,student.name);
 Objects 的 equals 方法比较的结果是一样的，但是更安全
-（一般的equals会报错，留下隐患出现空指针异常，但是 Objects.queals() 多了一个非空性的校验不会报错且返回一个准确的结果）
+（一般的equals会报错，留下隐患出现空指针异常，但是 Objects.equeals() 多了一个非空性的校验不会报错且返回一个准确的结果）
 
 public static boolean isNull(Object obj)     判断变量是否为 null，为 null 返回 true，反之返回 false
 与 s1 == null 结果完全一模一样
