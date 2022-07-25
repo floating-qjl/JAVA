@@ -4,7 +4,7 @@ Date类的对象在Java中代表的是当前所在系统的此刻日期时间。
 
 Date的构造器：
 public Date()                创建一个Date对象，代表的是系统当前此刻日期时间
-public Date(long time)      把时间毫秒值转换成Date日期对象。
+public Date(long time)       把时间毫秒值转换成Date日期对象。
 
 打印创建的对象，得出结果为时间内容，说明方法已经重写
 
