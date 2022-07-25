@@ -24,7 +24,7 @@ Lambda是一个匿名函数，我们可以把Lambda表达式理解为是一段�
 
 Lambda表达式的省略写法（进一步在Lambda表达式的基础上继续简化)：
 
-        btn. addActionListener(new ActionListener() {
+        btn.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                  System.out.println("有人点我，点我，点我!!");
@@ -32,21 +32,17 @@ Lambda表达式的省略写法（进一步在Lambda表达式的基础上继续�
         });
 
 参数类型可以省略不写。
-        btn . acalActionListener((ActionEvent e) ->{
-        System.out..println("有人点我,点我，点我!!"):
-        });
-
-        btn . acalActionListener( e ->{
-        System.out..println("有人点我,点我，点我!!"):
+        btn.acalActionListener((ActionEvent e) ->{
+        System.out.println("有人点我,点我，点我!!"):
         });
 
 如果只有一个参数，参数类型可以省略，同时()也可以省略。
-        btn . acalActionListener( e ->{
-        System.out..println("有人点我,点我，点我!!"):
+        btn.acalActionListener( e ->{
+        System.out.println("有人点我,点我，点我!!"):
         });
 
 如果Lambda表达式的方法体代码只有一行代码。可以省略大括号不写,同时要省略分号!
-        btn . acalActionListener( e ->System.out..println("有人点我,点我，点我!!"));
+        btn.acalActionListener( e ->System.out..println("有人点我,点我，点我!!"));
 
 如果Lambda表达式的方法体代码只有一行代码。可以省略大括号不写。此时，如果这行代码是return语句，
 必须省略return不写，同时也必须省略";"不写
