@@ -24,31 +24,34 @@
         定义类时同时定义了泛型的类就是泛型类。
         泛型类的格式:修饰符 class 类名<泛型变量>{ }
 范例： public class MyArrayList<T>{ }
-此处泛型变量T可以随便写为任意标识，常见的如E、T、K、v等。
+此处泛型变量T可以随便写为任意标识，常见的如E、T、K、V等。
 作用:编译阶段可以指定数据类型，类似于集合的作用。
 
 
 自定义泛型方法：
         定义方法时同时定义了泛型的方法就是泛型方法。
-        泛型方法的格式:修饰符<泛型变量>方法返回值方法名称(形参列表)报
+        泛型方法的格式:修饰符 <泛型变量> 方法返回值 方法名称(形参列表)
 
 例如：
         public <T> void show(T t){ }
         作用:方法中可以使用泛型接收一切实际类型的参数，方法更具备通用性。
         public static <T> void printArray(T[] arr){
-        if(arr != null){
-        stringBuilder sb = new stringBuilder("[");
-        for (int i = 0; i < arr.length; i++) {
-          sb.append(arr[i]).append(i == arr.length - 1 ? "" : "，");
-        }
-        sb.append("]");
-        system.out.println(sb);
-        }else {
-        system.out.println(arr)；
-        }
+            if(arr != null){
+                StringBuilder sb = new StringBuilder("[");
+                for (int i = 0; i < arr.length; i++) {
+                    sb.append(arr[i]).append(i == arr.length - 1 ? "" : "，");
+                }
+                sb.append("]");
+                System.out.println(sb);
+            }else {
+                System.out.println(arr)；
+            }
+       }
+
 
 泛型方法的核心思想：
         把出现泛型变量的地方全部替换成传输的真实数据类型
+        
 泛型方法的作用：
         方法中可以使用泛型接收一切实际类型的参数，方法更具备通用性
 
@@ -58,7 +61,8 @@
         使用了泛型定义的接口就是泛型接口。
         泛型接口的格式:修饰符interface接口名称<泛型变量>(
         public interface Data<E>{}
-        作用：泛型接可以让实现类选择当前功能需要操作的数据类型
+        
+        作用：泛型接口可以让实现类选择当前功能需要操作的数据类型
 
 泛型接口的原理：
         实现类可以在实现接口的时候传入自己操作的数据类型，这样重写的方法都将是针对于该类型的操作。
@@ -69,15 +73,16 @@
 泛型通配符：
         通配符:?
         ﹖可以在“使用泛型”的时候代表一切类型。
-        ET KV是在定义泛型的时候使用的。
+        E T K V是在定义泛型的时候使用的。
 
 注意:虽然BMW和BENZ都继承了Car但是ArrayList<BMW>和ArrayList<BENZ>与ArrayList<Car>没有关系的! !
+
 public static void go(ArrayList<?> cars){
 }
 
 泛型的上下限：
-        ? extends Car: ?必须是Car或者其子类泛型上限
-        ? super car : ?必须是Car或者其父类_泛型下限
+        ? extends Car: ?必须是Car或者其子类 泛型上限
+        ? super car : ?必须是Car或者其父类 泛型下限
 以防止无关的类加入到一切类型的集合中
 
 
