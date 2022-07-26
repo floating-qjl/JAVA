@@ -13,7 +13,7 @@ Set集合实现类特点：
 
 
 HashSet：
-        set<string> sets = new HashSet<>();（经典代码）
+        Set<String> sets = new HashSet<>();（经典代码）
         Set<String> sets = new LinkedHashSet<>();
 
 Set集合的功能上基本上与Collection的API一致。
@@ -30,14 +30,16 @@ HashSet底层原理：
 
 哈希值：
         是JDK根据对象的地址，按照某种规则算出来的int类型的数值。
+        
 Object类的API；
         public int hashCode():返回对象的哈希值
+        
 对象的哈希值特点：
         同一个对象多次调用hashCode()方法返回的哈希值是相同的
         默认情况下，不同对象的哈希值是不同的。
 
-Hashset无序原理解析
 
+Hashset无序原理解析:
 
 HashSet1.7版本原理解析:数组＋链表＋(结合哈希算法)
         Set<String> sets = new HashSet<>();
@@ -99,13 +101,13 @@ Treeset集合默认的规则：
 结论:想要使用TreeSet存储自定义类型。需要制定排序规则
 
 
-set<Apple> apples m new TreeSet<>0;
+set<Apple> apples = new TreeSet<>();
 
 自定义排序规则：
         TreeSet集合存储对象的的时候有2种方式可以设计自定义比较规则
 方式一：
         让自定义的类(如学生类）实现Comparable接口重写里面的compareTo方法来定制比较规则。
-        0verride
+        @Override
         publie int compareTo(Apple o) {
         //按重量进行比较的
         return this.weight - o.weight >= d ? 1 : -1;
@@ -126,7 +128,7 @@ set<Apple> apples m new TreeSet<>0;
 
 
 1．如果希望元素可以重复，又有索引，索引查询要快?
-        用ArrayList集合，基于数组的。《用的最多)
+        用ArrayList集合，基于数组的。(用的最多)
 2．如果希望元素可以重复，又有索引，增删首尾操作快?
         用LinkedList集合，基于链表的。
 3．如果希望增删改查都快,但是元素不重复、无序、无索引。
