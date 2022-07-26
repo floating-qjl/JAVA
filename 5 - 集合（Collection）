@@ -18,6 +18,7 @@
 
 
 集合类体系结构：
+
 Collection单列：
         collection单列集合，每个元素（数据）只包含一个值。
 Map双列：
@@ -27,14 +28,15 @@ Collection集合特点：
         List系列集合:添加的元素是有序、可重复、有索引。
                 ArrayList. LinekdList :有序、可重复、有索引。
         Set系列集合:添加的元素是无序、不重复、无索引。
-                HashSet:无序、不重复、无索引; LinkedHashSet:有序、不重复、无索引。
+                HashSet:无序、不重复、无索引; 
+                LinkedHashSet:有序、不重复、无索引。
                 TreeSet:按照大小默认升序排序、不重复、无索引。
 
 集合对于泛型的支持：
         集合都是支持泛型的，可以在编译阶段约束集合只能操作某种数据类型
         collection<string> lists = new ArrayList<string>( );
         collection<String> lists = new ArrayList<>();// JDK 1.7开始后面的泛型类型申明可以省略不写
-注意∶集合和泛型都只能支持引用数据类型，不支持基本数据类型，所以集合中存储的元素都认为是对象。（可以使用包装类来代替基本类型）
+注意∶集合和泛型都只能支持 引用数据类型，不支持 基本数据类型，所以集合中存储的元素都认为是对象。（可以使用包装类来代替基本类型）
 
 
 
@@ -43,11 +45,11 @@ Collection是单列集合的祖宗接口，它的功能是全部单列集合都�
 
 Collection集合常用API：
 
-public boolean add(E e)              把给定的对象添加到当前集合中；
+public boolean add(E e)               把给定的对象添加到当前集合中；
 public void clear()                   清空集合中所有的元素；
-public boolean remove(E e)           把给定的对象在当前集合中删除；
-public boolean contains(Object obj)  判断当前集合中是否包含给定的对象；
-public boolean isEmpty()             判断当前集合是否为空；
+public boolean remove(E e)            把给定的对象在当前集合中删除；
+public boolean contains(Object obj)   判断当前集合中是否包含给定的对象；
+public boolean isEmpty()              判断当前集合是否为空；
 public int size()                     返回集合中元素的个数。
 public Object[] toArray()             把集合中的元素，存储到数组中
 
@@ -61,7 +63,7 @@ Collection集合获取迭代器：
         Iterator<E> iterator()          返回集合中的迭代器对象，该迭代器对象默认指向当前集合的0索引
 
 Iterator中的常用方法：
-boolean hasNext( )           询问当前位置是否有元素存在，存在返回true ,不存在返回false
+boolean hasNext( )            询问当前位置是否有元素存在，存在返回true ,不存在返回false
 E next()                      获取当前位置的元素，并同时将迭代器对象移向下一个位置，注意防止取出越界。
 例如：
         Iterator<String> it = lists.iterator( );
@@ -83,7 +85,7 @@ for(元素数据类型 变量名∶数组或者Collection集合){
        //在此处使用变量即可，该变量就是元素
 }
 例如：
- Collection<String> list = new ArrayList<>();
+Collection<String> list = new ArrayList<>();
 ...
 for(String ele : list){
         System.out.println(ele);
@@ -102,10 +104,10 @@ default void forEach(Consumer< ? super T> action);        结合lambda遍历集�
 
 Collection<String> lists = new ArrayList<>();
 lists.forEach(new Consumer<String>(){
-@override
-public void accept(String s){
+    @override
+    public void accept(String s){
         System.out.println(s);
-        }
+    }
 });
 
 lists.forEach(s -> {
