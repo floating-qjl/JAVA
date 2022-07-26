@@ -55,9 +55,9 @@ public E removeLast()               从此列表中删除并返回最后一个�
 //队列
         LinkedList<String> queue = new LinkedList<>();/ /入队
         queue.addLast(e:"1号");
-        queue .addLast(e:"2号")；
-        queue .addLast(e:"3号");
-        queue .addLast(e:"4号");
+        queue.addLast(e:"2号")；
+        queue.addLast(e:"3号");
+        queue.addLast(e:"4号");
         System.out.println(queue);//出队
         System.out.println(queue.removeFirst());
         System.out.println(queue.removeFirst());
