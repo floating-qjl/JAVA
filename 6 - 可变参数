@@ -8,10 +8,10 @@
         可以不传输参数，可以传输1个或者多个，也可以传输一个数组
         可变参数在方法内部本质上就是一个数组。
 
-        public static void sum(int . . .nums){
+        public static void sum(int...nums){
         }
         sum() ; // 1、不传参数
-        suD( ..nums: 10); // 2、可以传输一个参数
+        suD(..nums: 10); // 2、可以传输一个参数
         sum(.nums: 10,20,30); // 3、可以传多个参数
         sum(new int[]{10,20,30,40,50});//4.可以传一个数组
 
@@ -28,11 +28,12 @@
         作用:Collections并不属于集合，是用来操作集合的工具类。
 
 Collections常用的API：
-    public static <T> boolean addAl1(Collection<? super T> c，T... elements)    给集合对象批量添加元素；
+    public static <T> boolean addAl1(Collection<? super T> c，T... elements)     给集合对象批量添加元素；
     public static void shuffle(List<?> list);                                    打乱List集合元素的顺序；
 
-    public static <T>void sort(List<T> list);                                    将集合中元素按照默认规则排序。
+    public static <T> void sort(List<T> list);                                    将集合中元素按照默认规则排序。
     public static <T> void sort(List<T> list，Comparator<? super T> c);          将集合中元素按照指定规则排序。（自定义类）
+        
         List集合存储相同大小的元素会保留
         Collections.sort(apples,new Comparator<Apple>() {
             @Override
