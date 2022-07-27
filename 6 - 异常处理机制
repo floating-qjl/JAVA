@@ -18,23 +18,23 @@ Exception: java.lang包下，称为异常类，它表示程序本身可以处理
 运行时异常示例:
         数组索引越界异常:ArraylndexOutOfBoundsException
         int[] arr = {1，2，3};
-        system.out.println(arr[3]);
+        System.out.println(arr[3]);
 
         空指针异常:NullPointerException，直接输出没有问题，但是调用空指针的变量的功能就会报错。
-        string name = null;
-        system.out.println(name); ll null
+        String name = null;
+        System.out.println(name); ll null
         System.out.println(name.length());//运行出错，程序终止
 
         数学操作异常:ArithmeticException
         int c = 10 / 0;
 
         类型转换异常:ClassCastException
-        0bject o = 23;
-        String s = (String) o;
+        Object o = 23;
+        String s = (String)o;
 
         数字转换异常: NumberFormatException
         String number = "23aabbc" ;
-        Integer it = Integer.value0f(number);
+        Integer it = Integer.valueOf(number);
         System.out.println(it + 1);
 
         运行时异常:一般是程序员业务没有考虑好或者是编程逻辑不严谨引起的程序错误，
@@ -163,7 +163,7 @@ public class ExceptionDemo03 {
         try{
         //可能出现异常的代码!
         }catch (Exception e){
-        e.printStackTrace();//直接打印异常栈信息
+            e.printStackTrace();//直接打印异常栈信息
         }
 
 
@@ -199,9 +199,9 @@ public class ExceptionDemo {
         try {
             checkAge(34);
         }catch (Exception e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
+    }
 
     public static void checkAge(int age) throws ItheimaAgeIlleagalException {
             if(age < 0 || age > 200){
