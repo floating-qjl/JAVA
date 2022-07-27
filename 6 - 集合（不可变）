@@ -23,7 +23,7 @@ System.out.println(score);
 
 不可变的Set集合
 Set<String> names = Set.of("迪丽热巴","迪丽热九"。"马尔扎哈"，"卡尔贬巴");
-//names . aad(""三少爷");
+//names.add(""三少爷");
 System.out.println(names) ;
 集合不可变，无法添加，添加则会报错
 
