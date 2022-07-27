@@ -15,11 +15,11 @@ static <K , V> Map<K, v> of(E...elements)       创建一个具有指定元素�
 这个集合不能添加，不能删除，不能修改。
 
 List<Double> lists = List.of(569.5，700.5，523.0，570.5);
-//lists.add(689.0);
+// lists.add(689.0);
 // lists.set(2，698.5);
-// system.out.println(lists);
+// System.out.println(lists);
 double score = lists.get(1);
-system.out.println(score);
+System.out.println(score);
 
 不可变的Set集合
 Set<String> names = Set.of("迪丽热巴","迪丽热九"。"马尔扎哈"，"卡尔贬巴");
@@ -27,7 +27,7 @@ Set<String> names = Set.of("迪丽热巴","迪丽热九"。"马尔扎哈"，"卡
 System.out.println(names) ;
 集合不可变，无法添加，添加则会报错
 
-Map<String，Integer> maps = Map.of( kl: "huawei"，vt:2，k2:".Java开发"，v2:1，k3:"手表"， v3:1);
+Map<String，Integer> maps = Map.of("huawei"，2，".Java开发"，1，"手表"，1);
 maps.put("衣服"，3);
 System.out.println(maps);
 
