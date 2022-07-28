@@ -18,7 +18,7 @@ System.out.println(size);
 
 
 File f1 = new File( pathname: "D: \\resources\\beauty.jpeg");//绝对路径
-System.out.println(f1.length();
+System.out.println(f1.length());
 //相对路径:一般定位模块中的文件的。相对到工程下!!
 File f2 = new File( pathname: "file-io-app/src/data.txt");
 System.out.println(f2.length());
@@ -51,10 +51,11 @@ public String getName()                             返回由此抽象路径名�
 System.out.println(f1.getName() );
 
 public long lastModified()                          返回文件最后修改的时间毫秒值；
-long time = f1.lastModified(;
-System.out.println("最后修改时间: "+ new SimpleDateFormat( pattemn: "yyyy/MM/dd HH:mm:ss").format(time));
 
-System.out.println(f1.length()); //字节大小
+long time = f1.lastModified();
+System.out.println("最后修改时间: "+ new SimpleDateFormat( pattern: "yyyy/MM/dd HH:mm:ss").format(time));
+
+System.out.prin tln(f1.length()); //字节大小
 
 
 
@@ -92,25 +93,24 @@ public static void searchFile(File dir ,String fileName){
         if(files != null && files.length > 0) {
             for (File file : files) {
                 // 6、判断当前遍历的一级文件对象是文件还是■目录
-               if(file.isFile()){
-                   //7、是不是咱们要找的，是把其路径输出即可
-                   if(file.getName().contains(fileName)){
-                   System.out.println("找到了: " + file.getAbsolutePath()) ;
-                   try {
-                       //启动
-                       Runtime r = Runtime.getRuntime();
-                       r.exec(file.getAbsolutePath());
-                   }catch (IOException e) {
-                       e.printStackTrace();
-                       }
-                   }
-               }else{
+                if(file.isFile()){
+                    //7、是不是咱们要找的，是把其路径输出即可
+                    if(file.getName().contains(fileName)){
+                    System.out.println("找到了: " + file.getAbsolutePath()) ;
+                    try {
+                        //启动
+                        Runtime r = Runtime.getRuntime();
+                        r.exec(file.getAbsolutePath());
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
                    // 8、是文件夹，需要继续递归寻找
-                   searchFile(file, fileName) ;
-               }
+                   searchFile(file, fileName);
+                }
             }
         }else {
-        system.out.println("对不起，当前搜索的位置不是文件夹! ");
+            System.out.println("对不起，当前搜索的位置不是文件夹! ");
         }
         }
 }
@@ -135,15 +135,15 @@ public static void buy(int money){
         //统计可以换算的钱
         int allMoney = 0;
         if(coverNumber >= 4){
-        allNoney += (coverNumber / 4) * 2;
+            allNoney += (coverNumber / 4) * 2;
         }
         lastcoverNumber = coverNumber % 4;
         if(bottleNumber >= 2){
-        allMoney t= (bottleNumber / 2)*2;
+            allMoney t= (bottleNumber / 2) * 2;
         }
         lastBottleNumber = bottleNumber % 2;
         if(allMoney >= 2){
-        buy(allMoney);
+            buy(allMoney);
         }
 }
 
