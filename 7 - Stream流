@@ -22,13 +22,13 @@ default Stream<E> stream()                            获取当前集合对象�
 
 代码：
         Collection集合获取流：
-        collection<String> list = new ArrayList<>();
+        Collection<String> list = new ArrayList<>();
         Stream<String> s = list.stream();
 
         Map集合获取流：
-        Map<str1ng,Integer> maps = new HashMapc>()；
+        Map<String,Integer> maps = new HashMapc>()；
         //键流
-        Stream<string> keyStream = maps.keySet().stream()；
+        Stream<String> keyStream = maps.keySet().stream()；
         //值流
         Stream<Integer> valueStream = maps.values().stream()；
         //键值对流（拿整体)
@@ -61,10 +61,10 @@ Stream的常用API：
 
         map ：加工方法
         count： 统计个数
-        filter：过滤元素
+
 
 代码：
-        List<string> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("张无忌");
         list.add("周芷若");
         list.add("赵敏");
@@ -73,7 +73,7 @@ Stream的常用API：
         list.add("张三丰");
 
         list.stream().filter(new Predicate<String>() {
-            @0verride
+            @Override
             public boolean test(String s) {
                 return s.startsWith("张");
             }
@@ -86,15 +86,15 @@ Stream的常用API：
         // Map加工方法：第一个参数是原材料，第二个参数是加工后结果
         //给集合元素的前面都加上一个:黑马的:
         list.stream().map(new Function<String,String>() {
-            @0verride
-            public string apply(String s) {
+            @Override
+            public String apply(String s) {
                 return "黑马的：" + s;
             }
         })；
 简化：  list.stream.map(s -> "黑马的：" + s).forEach(System.out::println);
 
         //需求:把所有的名称都加工成一个学生对象。
-        list.stream.map(s - > new Student(s)).forEach(s -> System.out.println(s));
+        list.stream.map(s -> new Student(s)).forEach(s -> System.out.println(s));
 化简：  list.stream.map(Student::new).forEach(System.out::println);//构造器引用 方法引用
 
         //合并流。
@@ -119,10 +119,10 @@ Stream流的常见终结操作方法:
         //寻找工资最大的一个人并封装成优秀员工对象
         Topperformer t = one.stream().max((e1,e2) -> Double.compare(e1.getSalary() + e1.getBonus(),e2.getSalary() + e2.getBonus())
         .map(e -> new Topperformer(e.getName(),money. e.getSalary() + e.getBonus())).get()
-        system.out.println(t);
+        System.out.println(t);
 
         //升序排序，跳过最小的，忽略最大的，遍历剩余的求平均工资
-        one .stream().sorted((e1,e2) -> Double.compane(e1.getSalary() + e1.getBonus(), e1.getSalary() + e2.getBonus()).
+        one.stream().sorted((e1,e2) -> Double.compare(e1.getSalary() + e1.getBonus(), e1.getSalary() + e2.getBonus()).
                 skip(1).limit(one.size() - 2).forEach(e -> {
                       //求出总和:剩余员工的工资总和，此变量必须定义成静态变量，不然无法使用（本质上这里是一个方法，有独立的栈，main栈里的变量无法使用，但是可以使用共享变量）
                  allMoney += (e.getSalary() + e.getBonus();
@@ -140,20 +140,20 @@ Stream流的收集操作：
 
 
 Stream流的收集方法：
-        R collect(collector collector)                                                     开始收集Stream流，指定收集器
+        R collect(Collector collector)                                                     开始收集Stream流，指定收集器
 
-        public static <T> collector tolist()                                              把元素收集到List集合中；
-        public static <T> collector toSet()                                               把元素收集到Set集合中；
-        public static collector toMap(Function keyMapper , Function valueMapper)          把元素收集到Map集合中；
+        public static <T> Collector tolist()                                              把元素收集到List集合中；
+        public static <T> Collector toSet()                                               把元素收集到Set集合中；
+        public static Collector toMap(Function keyMapper , Function valueMapper)          把元素收集到Map集合中；
 
-        stream<String> s1 = list.stream().filter(s -> s.startsWith("张"))；
+        Stream<String> s1 = list.stream().filter(s -> s.startsWith("张"))；
         List<String> zhangList = s1.collect(Collectors.toList())；
 
         Stream<String> s2 = list.stream().filter(s -> s.startsWith("张"));
-        set<String> zhangSet = s2.collect(collectors.toSet());
+        set<String> zhangSet = s2.collect(Collectors.toSet());
 
         Stream<string> s3 = list.stream().filter(s -> s.startsWith("张"));
-        0bject[]arrs = s3.toArray();
+        Object[]arrs = s3.toArray();
 
 注意：同一个Stream流只能使用一次
 
