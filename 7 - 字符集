@@ -8,11 +8,11 @@
 
 
 ASCII字符集:
-        ASCI(American Standard Code for Information Interchange，美国信息交换标准代码):包括了数字、英文、符号。
+        ASCII(American Standard Code for Information Interchange，美国信息交换标准代码):包括了数字、英文、符号。
         ASCII使用1个字节存储一个字符，一个字节是8位，总共可以表示128个字符信息，对于英文，数字来说是够用的。
 
 GBK：
-window系统默认的码表。兼容ASCII码表，也包含了几万个汉字，并支持繁体汉字以及部分日韩文字。
+Wwindow系统默认的码表。兼容ASCII码表，也包含了几万个汉字，并支持繁体汉字以及部分日韩文字。
 注意:GBK是中国的码表，一个中文以两个字节的形式存储。但不包含世界上所有国家的文字。
 
 
@@ -34,17 +34,21 @@ Unicode码表:
 
 String编码：
 byte[] getBytes()                           使用平台的默认字符集将该String编码为一系列字节，将结果存储到新的字节数
+
 String name = "abc我爱你中国";                      UTF-8
-byte[] bytes = name. getBytes();
+byte[] bytes = name.getBytes();
 
 byte[] getBytes(String charsetName)         使用指定的字符集将该String编码为一系列字节，将结果存储到新的字节数组中
+
 byte[] bytes = name.getBytes( charsetName: "GBK");
 
 String解码：
-String(byte[] bytes)                        通过使用平台的默认字符集解码指定的子节数组术构但刺R9
-String rs = new string(bytes);                          UTF-8
+String(byte[] bytes)                        通过使用平台的默认字符集解码指定的字节数组术构但刺R9
+
+String rs = new String(bytes);                          UTF-8
 System.out.println(rs);
 
 String(byte[] bytes,String charsetName)     通过指定的字符集解码指定的字节数组来构造新的String
+
 String rs = new String(bytes, charsetName: "GBK");
 
