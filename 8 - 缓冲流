@@ -27,10 +27,10 @@ public BufferedInputStream(InputStream is)        可以把低级的字节输入
 public BufferedOutputStream(OutputStream os)        可以把低级的字节输出流包装成一个高级的缓冲字节输出流，从而提高写数据的性能
 
 代码：
-        InputStream is = new FileInputStream( name: "file-io-app/src/out04.txt" );
+        InputStream is = new FileInputStream("file-io-app/src/out04.txt" );
         InputStream bis = new BufferedInputStream(is);
 
-        outputStream os = new File0utputStream( name: "file-io-app/src/out05.txt");
+        outputStream os = new File0utputStream("file-io-app/src/out05.txt");
         outputstream bos = new BufferedOutputstream(os);
 
 
@@ -54,12 +54,12 @@ public BufferedReader(Reader r)       可以把低级的字符输入流包装成
 public String readLine()             读取一行数据返回，如果读取没有完毕，无行可读返回null
 
 代码：
-        Reader fr = new FileReader( fileName: "file-io-app/src/data07.txt");
+        Reader fr = new FileReader("file-io-app/src/data07.txt");
         BufferedReader br = new BufferedReader(fr);//独有，不能使用多态
 
         String line;
-        while ( (line = br.readLine()) != null){
-        System.out.println(line);
+        while ((line = br.readLine()) != null){
+            System.out.println(line);
         }
 
 
@@ -75,11 +75,11 @@ public void newLine()                 换行操作
 
 
 代码：
-        Writer fw = new FileWriter( fileName: "file-io-app/src/out08.txt"，append: true);
+        Writer fw = new FileWriter("file-io-app/src/out08.txt"，true);
         BufferedWriter bw = new BufferedWriter(fw);
 
         bw.newLine();
-        //BufferedWriter bw = new BufferedWriter(new FileWriter( fileName:"io-app2/src/new.txt")).
+        //BufferedWriter bw = new BufferedWriter(new FileWriter("io-app2/src/new.txt")).
 
 字符缓冲流为什么提高了操作数据的性能?
         字符缓冲流自带8K缓冲区
