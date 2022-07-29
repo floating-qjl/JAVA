@@ -22,10 +22,10 @@ public InputStreamReader(InputStream is , String charset)       可以把原始�
 
 
 代码：
-        InputStream is = new FileInputstream( name:"D:\\resources\|data.txt");
-        Reader isr = new InputStreamReader(is);/默认以UTF-8的方式转换成字符流。还是会乱码的
+        InputStream is = new FileInputstream("D:\\resources\\data.txt");
+        Reader isr = new InputStreamReader(is);//默认以UTF-8的方式转换成字符流。还是会乱码的
 
-        Reader isr = new InputStreamReader(is , charsetName:"GBK");//以指定的GBK编码转换成字符输入流
+        Reader isr = new InputStreamReader(is, "GBK");//以指定的GBK编码转换成字符输入流
 
 
 
@@ -37,10 +37,10 @@ public OutputStreamWriter(Outputstream os，String charset)    可以把原始�
 
 
 代码：
-        OutputStream os = new FileOutputStream( name: "io-app2/src/out03.txt");
+        OutputStream os = new FileOutputStream("io-app2/src/out03.txt");
         Writer osw = new OutputStreamWriter(os);//以默认的UTF-8写字符出去跟直接写FileWriter一样
 
-        Writer osw = new outputStreamWriter(os , charsetName:"GBK");//指定GBK的方式写字符出去
+        Writer osw = new outputStreamWriter(os , "GBK");//指定GBK的方式写字符出去
 
 
 
