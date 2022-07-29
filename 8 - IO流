@@ -25,9 +25,9 @@ public int read()                               每次读取一个字节返回�
 public int read(byte[] buffer)                  每次读取一个字节数组返回，如果字节已经没有可读的返回-1
 
 代码：
-        Inputstream is = new FileInputstream( name: "file-io-app\\src\\data.txt");
+        InputStream is = new FileInputStream("file-io-app\\src\\data.txt");
         int b1 = is.read();
-        system.out.println((char)b1);
+        System.out.println((char)b1);
 当超出文件最后一个字节时，返回-1
 
 每次读取一个字节存在什么问题?
@@ -37,12 +37,12 @@ public int read(byte[] buffer)                  每次读取一个字节数组�
 
 
 代码：
-        InputStream is = new FileInputStream( name: "file-io-app/src/data02.txt");
+        InputStream is = new FileInputStream("file-io-app/src/data02.txt");
         byte[] buffer = new byte[3];
         int len = is.read(buffer);
-        system.out.println("读取了几个字节:" + len);
+        System.out.println("读取了几个字节:" + len);
         //String rs = new String(buffer);
-        String rs2 = new string(buffer,offset 0 ,len2);
+        String rs2 = new String(buffer, 0 ,len2);
                                     下标为0开始，读取 len2 个字节
         System.out.println(rs);
 
@@ -58,7 +58,7 @@ public int read(byte[] buffer)                  每次读取一个字节数组�
         public int read(byte[] buffer)                  每次读取一个字节数组返回，如果字节已经没有可读的返回-1
 
 代码：
-        File f = new File( pathname:"file-io-app/src/data03.txt");
+        File f = new File("file-io-app/src/data03.txt");
         InputStream is = new FileInputStream(f);
         byte[] buffer = new byte[(int) f.length()];
         int len = is.read(buffer);
@@ -70,12 +70,12 @@ public int read(byte[] buffer)                  每次读取一个字节数组�
 
 方式二：
         官方为字节输入流InputStream提供了如下API可以直接把文件的全部数据读取到一个字节数组中
-        public byte[]readAllBytes() throws IOException            直接将当前字节输入流对应的文件对象的字节数据装到一个字节数组返回
+        public byte[] readAllBytes() throws IOException            直接将当前字节输入流对应的文件对象的字节数据装到一个字节数组返回
 
 
 代码：
-        byte[] buffer = is.readAllBytes;
-        system.out.println(new String(buffer) );
+        byte[] buffer = is.readAllBytes();
+        System.out.println(new String(buffer));
 
 直接把文件数据全部读取到一个字节数组可以避免乱码，是否存在问题?
         如果文件过大，定义的字节数组可能引起内存溢出。
@@ -85,13 +85,13 @@ public int read(byte[] buffer)                  每次读取一个字节数组�
 
 
 
-文件字节输出流:FileoutputStream
+文件字节输出流:FileOutputStream
         作用:以内存为基准，把内存中的数据以字节的形式写出到磁盘文件中去的流。
 
 构造器：
-public FileoutputStream(File file)                              创建字节输出流管道与源文件对象接通；
+public FileOutputStream(File file)                              创建字节输出流管道与源文件对象接通；
 public FileOutputStream(File file, boolean append)             创建字节输出流管道与源文件对象接通，可追加数据
-public Fileoutputstream(String filepath)                        创建字节输出流管道与源文件路径接通；
+public FileOutputstream(String filepath)                        创建字节输出流管道与源文件路径接通；
 public FileOutputStream(String filepath,boolean append)        创建字节输出流管道与源文件路径接通，可追加数据
 
 
@@ -107,20 +107,20 @@ public void write(byte[ ] buffer , int pos , int len)        写一个字节数�
 作用：使写出去的数据成功生效
 
 代码：
-        OutputStream os = new FileOutputStream( name: "file-io-app/src/out04.txt");
-        //outputStream os = new FileOutputStream( name: "file-io-app/src/out04,append: true);
-        os.write( b: 'a' );
-        os.write( b: 98);
-        os.write( b:'徐');//写中文会乱码
+        OutputStream os = new FileOutputStream("file-io-app/src/out04.txt");
+        //outputStream os = new FileOutputStream("file-io-app/src/out04", true);
+        os.write('a');
+        os.write(98);
+        os.write('徐');//写中文会乱码
         os.write("\r\n".getBytes());//输出换行
 
-        byte[] buffer = {'a' , 97,98,99};
+        byte[] buffer = {'a',97,98,99};
         os.write(buffer);
         byte[] buffer2 ="我是中国人".getBytes();
         os.write(buffer2);
 
-        byte[] buffer3 = { ' a ' ,97，98，99};
-        os.write(buffer3,off:0 , len: 3);
+        byte[] buffer3 = {'a',97，98，99};
+        os.write(buffer3, 0, 3);
 
 
 
@@ -129,16 +129,16 @@ public void write(byte[ ] buffer , int pos , int len)        写一个字节数�
     拷贝视频：
         try{
         //1、创建一个字节输入流管道与原视频接通
-        Inputstream is=new FileinputStream(name"D:\\course\\基础加强l|dayG8-日志框架、阶段项目\\视频\\16、用户购票功能.avi");
+        InputStream is = new FileinputStream("D:\\course\\基础加强l|dayG8-日志框架、阶段项目\\视频\\16、用户购票功能.avi");
         //2、创建一个字节输出流管道与目标文件接通
-        outputstream os=new FileOutputstream(name:"D : \\course\\new.avi");
+        OutputStream os = new FileOutputStream("D:\\course\\new.avi");
         //3、定义一个字节数组转移数据
-        byte[]buffer=new byte[1024];
+        byte[] buffer=new byte[1024];
         int len; //记录每次读取的字节数。
-        while((len=is.read(buffer))!=-1){
-        os.write(buffer,off:0L,len);
+        while((len = is.read(buffer)) != -1){
+            os.write(buffer,0 ,len);
         }
-        system.out.println("复制完成了!");
+        System.out.println("复制完成了!");
         //4、关闭流。
         os.close();
         is.close();
@@ -165,7 +165,7 @@ try-catch-finally：
 
 try-catch-finally格式：
         try {
-            FileoutputStream fos = new FileoutputStream( "a.txt");
+            FileOutputStream fos = new FileOutputStream("a.txt");
             fos.write(97);
             fos.close();
         } catch ( IOException e) {
@@ -177,20 +177,21 @@ try-catch-finally格式：
 修改代码：
         哪怕上面有return语句执行，也必须先执行完 finally 才可以!
         开发中不建议在 finally 加return ,如果加了，返回的永远是这里的数据了，这样会出问题!
+        
         finally {
-        //无论代码是正常结束，还是出现异常都要执行这里
-        System.out.println( "========finally
-        try{
-        //4、关闭流。
-            if(os != null) os.close();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if(is != null) is.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+            //无论代码是正常结束，还是出现异常都要执行这里
+            System.out.println("========finally========");
+            try{
+            //4、关闭流。
+                if(os != null) os.close();
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if(is != null) is.close();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -211,20 +212,21 @@ JDK7改进：
 代码：
         try (
         //这里面只能放置资源对象，用完会自动关闭:自动调用资源对象的close方法关闭资源（即使出现异常也会做关闭操作)
-        // 1、创建一个字节输入流管道与原视频接逦
-        Inputstream is = new FileInputstream( name: "file-io-app/src/out04.txt" );
+        //1、创建一个字节输入流管道与原视频接逦
+        InputStream is = new FileInputStream("file-io-app/src/out04.txt");
         //2、创建一个字节输出流管道与目标文件接通
-        outputstream os = new FileOutputStream( name: "file-io-app/src/out05.txt");
+        OutputStream os = new FileOutputStream("file-io-app/src/out05.txt");
         //里面只能放资源对象，不然会报错，即继承接口AutoCloseable
         ){
         //3、定义一个字节数组转移数据
-            byte[ ] buffer = new byte[1024];int len; /l/记录每次读取的字节数。
+            byte[] buffer = new byte[1024];
+            int len; //记录每次读取的字节数。
             while ((len = is.read(buffer)) != -1){
-                os.write(buffer,off:0,len);
+                os.write(buffer,0,len);
             }
-        system.out.println("复制完成了! ");
+        System.out.println("复制完成了! ");
         }catch (Exception e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
 
@@ -240,19 +242,19 @@ JDK9改进方案：
 
 
 代码：
-        InputStream is = new FileInputstream( name: "file-io-app/src/out04.txt");
+        InputStream is = new FileInputstream("file-io-app/src/out04.txt");
         //2、创建一个字节输出流管道与目标文件接通
-        outputStream os = new FileOutputStream( name: "file-io-app/src/out05.txt");
+        outputStream os = new FileOutputStream("file-io-app/src/out05.txt");
         try ( is ; os ) {
         // 3、定义一个字节数组转移数据
         byte[] buffer = new byte[1024];
         int len; //记录每次读取的字节数。
         while ((len = is.read(buffer)) != -1){
-            os.write(buffer,off: 0 , len);
+            os.write(buffer,0 , len);
         }
-        system.out.println("复制完成了!");
+        System.out.println("复制完成了!");
         }catch (Exception e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
 //不建议使用
 
@@ -276,12 +278,12 @@ public FileReader(File file)            创建字符输入流管道与源文件�
 public FileReader(String pathname)      创建字符输入流管道与源文件路径接通；
 
 API：
-public int read()                    每次读取一个字符返回，如果字符已经没有可读的返回-1
-public int read(char[] buffer)        每次读取一个字符数组，返回读取的字符个数 如果字符已经没有可读的返回-1
+public int read()                       每次读取一个字符返回，如果字符已经没有可读的返回-1
+public int read(char[] buffer)          每次读取一个字符数组，返回读取的字符个数 如果字符已经没有可读的返回-1
 
 
 代码：
-        Reader fr = new FileReader( fileName: "file-io-appllsrc\\data06.txt"");
+        Reader fr = new FileReader("file-io-appllsrc\\data06.txt");
         //2、读取一个字符返回，没有可读的字符了返回-1
         int code = fr.read();
         System.out.print((char)code);
@@ -294,12 +296,12 @@ public int read(char[] buffer)        每次读取一个字符数组，返回读
 
 
 代码：
-        Reader fr = new FileReader( fileName: "file-io-app/src/data07.txt");
+        Reader fr = new FileReader("file-io-app/src/data07.txt");
         //2、用循环，每次读取一个字符数组的数据
         char[] buffer = new char[1024];// 1K字符
         int len;
         while ((len = fr.read(buffer)) != -1) {
-            String rs = new string(buffer,offset: 0,len);
+            String rs = new String(buffer, 0, len);
             System.out.print(rs);
         }
 
@@ -325,28 +327,28 @@ public Filewriter(String filepath,boolean append)         创建字符输出流�
 API：
         void write(int c)                                      写一个字符
         void write(char[] cbuf)                                写入一个字符数组
-        void write(char[] cbuf, int off,int len)              写入字符数组的一部分
+        void write(char[] cbuf, int off,int len)               写入字符数组的一部分
         void write(String str)                                 写一个字符串
-        void write(String str, int off, int len)              写一个字符串的一部分
+        void write(String str, int off, int len)               写一个字符串的一部分
         void write(int c)                                      写一个字符
 
 
 代码：
-        Writer fw = new FileWriter( fileName: "file-io-app/s/out08.txt");//覆盖管道，每次启动都会清空文件之前的数握
-        Writer fw = new FileWriter( fileName: "file-io-app/s/out08.txt",true);//追加数据，就不会直接覆盖了
-        fw.write( c: 98);
-        fw.write( c: 'a ' );
-        fw.write( c: '徐');//不会出问题了
-        fw.white( str: "lrln");//换行
+        Writer fw = new FileWriter("file-io-app/s/out08.txt");//覆盖管道，每次启动都会清空文件之前的数握
+        Writer fw = new FileWriter("file-io-app/s/out08.txt",true);//追加数据，就不会直接覆盖了
+        fw.write(98);
+        fw.write('a');
+        fw.write('徐');//不会出问题了
+        fw.white("lrln");//换行
 
-        fw.write( str: "abc我是中国人");
+        fw.write("abc我是中国人");
 
         char[] chars = "abc我是中国人".toCharArray(O);
         fw.write(chars);
 
-        fw.write( str: "abc我是中国人",off:0,len: 5);
+        fw.write("abc我是中国人", 0, 5);
 
-        fw.write( str: "abc我是中国人",off:0,len: 5);
+        fw.write("abc我是中国人", 0, 5);
 
         fw.flush();//刷新后流可以继续使用
         fw.close();//关闭包含刷线，关闭后流不能使用
