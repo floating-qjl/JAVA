@@ -13,10 +13,10 @@ public PrintStream(String filepath)        打印流直接通向文件路径；
 public void print(xxx xx)                 打印任意类型的数据出去
 
 代码：
-        PrintStream ps = new PrintStream(new FileOutputStream( “"io-app2/src/ps.txt"));
-        PrintStream ps = new Printstream( fileName: "io-app2/src/ps.txt");
+        PrintStream ps = new PrintStream(new FileOutputStream("io-app2/src/ps.txt"));
+        PrintStream ps = new Printstream("io-app2/src/ps.txt");
         ps. println(97);
-        ps.println( 'a' );
+        ps.println('a');
         ps.println(23.3);
         ps.println(true);
         ps.println("我是打印流输出的，我是啥就打印啥");
@@ -28,7 +28,7 @@ PrintWrite:
 
 构造器：
 public Printwriter(OutputStream os)            打印流直接通向字节输出流管道；
-public Printwriter (writer w)                  打印流直接通向字符输出流管道；
+public Printwriter (Writer w)                  打印流直接通向字符输出流管道；
 public Printwriter (File f)                    打印流直接通向文件对象；
 public Printwriter (string filepath)           打印流直接通向文件路径；
 
@@ -42,7 +42,7 @@ PrintStream和PrintWriter的区别：
         PrintStream继承自字节输出流OutputStream，支持写字节数据的方法。
         PrintWriter继承自字符输出流Writer，支持写字符数据出去。
 
-        例如：ps. write( s:"我在学习!"");
+        例如：ps.write("我在学习!");
 
         若想追加数据，则必须在低级字节管道上追加
 
@@ -68,7 +68,7 @@ Properties核心作用:
         属性文件:后缀是.properties结尾的文件,里面的内容都是key=value，后续做系统配置信息的。
 
 Properties的API:
-        void load( InputStream inStream)                        从输入字节流读取属性列表（键和元素对)
+        void load(InputStream inStream)                        从输入字节流读取属性列表（键和元素对)
 
         void load(Reader reader)                                从输入字符流读取属性列表（键和元素对)
 
@@ -80,9 +80,9 @@ Properties的API:
 
         public Object setProperty(String key, String value)     保存键值对(put)；
 
-        public string getProperty(String key)                   使用此属性列表中指定的键搜索属性值(get)；
+        public String getProperty(String key)                   使用此属性列表中指定的键搜索属性值(get)；
 
-        public Set<String> stringPropertyNames()                所有键的名称的集合(keySet())；
+        public Set<String> StringPropertyNames()                所有键的名称的集合(keySet())；
 
 代码：
         Properties properties = new Properties();
@@ -93,7 +93,7 @@ Properties的API:
 
         参数一:保存管道 字符输出流管道
         参数二:保存心得
-        properties.store(new FileWriter( fileName:"io-app2/src/users.properties")
+        properties.store(new FileWriter("io-app2/src/users.properties")
         , comments: "this is users! ! i am very happy! give me 100! ");
 
 
@@ -101,7 +101,7 @@ Properties的API:
         System.out.println(properties);
         String rs = properties.getProperty("dlei");
         System.out.println(rs);
-        String rs1 = properties.getProperty( "admin" );
+        String rs1 = properties.getProperty("admin");
         System.out.println(rs1);
 
 
@@ -123,11 +123,11 @@ FileUtils主要有如下方法:
 
 代码：
         完成文件复制
-        IOUtils.copy(new FileInputStream("D : \\resources\\hushui.jpeg"),
-        new File0utputStream("D : \\resources \\hushui2.jpeg"));
+        IOUtils.copy(new FileInputStream("D:\\resources\\hushui.jpeg"),
+        new FileOutputStream("D:\\resources\\hushui2.jpeg"));
 
         完成文件复制到某个文件夹下
-        FileUtils.copgFileToDirectory(new File("D:\\resources\\hushui.jpeg"), new File("D:/"));
+        FileUtils.copyFileToDirectory(new File("D:\\resources\\hushui.jpeg"), new File("D:/"));
 
         完成文件夹复制到某个文件夹下!
         FileUtils.copyDirectoryToDirectory(new File("D:\\resources"), new File("D:\\new">);
@@ -136,7 +136,7 @@ FileUtils主要有如下方法:
         FileUtils.deleteDirectory(new File("D:\\new" ) ) ;
 
         JDK1.7自己也做了一些一行代码完成复制的操作: New IO的技术
-        Files.copy(Path.of("D: \\resources\\hushui.jpeg"),Path.of(""D:\\resources\\hushui3.jpeg"));
+        Files.copy(Path.of("D:\\resources\\hushui.jpeg"),Path.of("D:\\resources\\hushui3.jpeg"));
 
 
 导入commons-io-2.6.jar做开发
