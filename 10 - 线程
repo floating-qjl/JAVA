@@ -86,7 +86,7 @@ public class File {
 //        @Override
 //        public void run() {
 //            for (int i = 0; i < 10; i++) {
-//                system.out.println("子线程执行输出:" + i);
+//                System.out.println("子线程执行输出:" + i);
 //            }
 //        }
 //       };
@@ -156,7 +156,7 @@ public FutureTask<>(Callable call)               把Callable对象封装成Futur
 public V get() throws Exception                 获取线程执行call方法返回的结果。
 
 
-        代码：
+代码：
 public class File {
     public static void main(String[] args) {
         //创建Callable任务对象
@@ -240,7 +240,7 @@ Thread获取和设置线程名称：
 Thread构造器：
 public Thread(String name)                            可以为当前线程指定名称；
 public Thread(Runnable target)                        封装Runnable对象成为线程对象；
-public Thread(Runnable target , string name )         封装Runnable对象成为线程对象，并指定线程名称
+public Thread(Runnable target , String name)         封装Runnable对象成为线程对象，并指定线程名称
 
 
 代码：
@@ -258,7 +258,7 @@ public Thread(Runnable target , string name )         封装Runnable对象成为
 
         //哪个线程执行它，它就得到哪个线程对象（当前线程对象)
         //可以在重写方法时，使用下述方法，区别多个子线程
-        //例如：System.out.println( Thread.currentThread().getName())
+        //例如：System.out.println(Thread.currentThread().getName());
         Thread m = Thread.currentThread();
         System.out.println(m.getName());
 
@@ -271,7 +271,7 @@ Thread类的线程休眠方法：
 public static void sleep(long time)      让当前线程休眠指定的时间后再继续执行，单位为毫秒。
 
 代码：
-        Thread.sleep( millis: 3000);//静态方法可以直接使用类名调用
+        Thread.sleep(3000);//静态方法可以直接使用类名调用
 
 
 
@@ -298,21 +298,21 @@ public static void sleep(long time)      让当前线程休眠指定的时间后
 
 格式：
 synchronized(同步锁对象){
-        操作共享资源的代码(核心代码)
-        }
+    操作共享资源的代码(核心代码)
+}
 
 锁对象要求：
         理论上:锁对象只要对于当前同时执行的线程来说是同一个对象即可。
 
 //此为常量字符串，在内存中独一份，因此对于多个线程都是同一个对象
-synchronized( "heima" ) {
+synchronized("heima") {
         if(this.money >= money){
-            System.out.println(name+"来取钱，吐出: " + money);//更新余额
+            System.out.println(name + "来取钱，吐出: " + money);//更新余额
             this.money -= money;
-            System.out.println(name+"取钱后，余额剩余:" + this.money);
+            System.out.println(name + "取钱后，余额剩余:" + this.money);
         }
         else{
-            System.out.println(name+"来取钱，余额不足!")；
+            System.out.println(name + "来取钱，余额不足!")；
         }
 }
 
@@ -340,8 +340,8 @@ synchronized (this){}
         原理:每次只能一个线程进入，执行完毕以后自动解锁，其他线程才可以进来执行。
 
 格式：
-        修饰符 synchronized 返回值类型方法名称（形参列表){
-        操作共享资源的代码
+        修饰符 synchronized 返回值类型 方法名称（形参列表){
+            操作共享资源的代码
         }
 
 代码：
@@ -378,20 +378,21 @@ API：
 private final Lock lock = new ReentrantLock()；//唯一，不可替换
 
 public void drawMoney(double money) {
-        String name = Thread.currentThread( ).getName();// 2、判断余额是否足够
+        String name = Thread.currentThread( ).getName();
         lock.lock();//上锁
+        // 判断余额是否足够
         try{
             if(this.money >= money){
-                System.out.println(name+"来取钱，吐出:" + money) ;/更新余额
+                System.out.println(name + "来取钱，吐出:" + money) ;//更新余额
                 this.money -= money;
-                System.out.println(name+"取钱后，余额剩余:" + this.money);
+                System.out.println(name + "取钱后，余额剩余:" + this.money);
             }else{
-                System.out.println(name+"来取钱，余额不足!");
+                System.out.println(name + "来取钱，余额不足!");
             }
         }finally{
             lock.unlock();//放在 finally 里面，防止死锁
         }
-        }
+}
 
 
 
@@ -421,7 +422,7 @@ Object类的等待和唤醒方法：
 
 
 代码：
-public synchronized void drawHoney(double money) {
+public synchronized void drawMoney(double money) {
         try {
             String name = Thread.currentThread().getName();
             if(this.money >= money){
@@ -495,12 +496,12 @@ ExecutorService的常用方法：
 新任务拒绝策略：
         ThreadPoolExecutor.AbortPolicy                    丢弃任务并抛出RejectedExecutionException异常。是默认的策略
         ThreadPoolExecutor.DiscardPolicy:                 丢弃任务，但是不抛出异常这是不推荐的做法
-        ThreadPoolExecutor.Discard0ldestPolicy            抛弃队列中等待最久的任务然后把当前任务加入队列中
+        ThreadPoolExecutor.DiscardOldestPolicy            抛弃队列中等待最久的任务然后把当前任务加入队列中
         ThreadPoolExecutor.callerRunsPolicy               由主线程负责调用任务的run()方法从而绕过线程池直接执行
 
 Runnable 代码：
         ExecutorService pool = new ThreadPoolExecutor(corePoolSize: 3,maximumPoolSize: 5,
-        keepAliveTime: 6,TimeUnit.SECONDS,new ArrayBlockingQueve<>( capacity 5)，Executors.defaultThreadFactory(),
+        keepAliveTime: 6,TimeUnit.SECONDS,new ArrayBlockingQueve<>( capacity: 5)，Executors.defaultThreadFactory(),
         new ThreadPoolExecutor.AbortPolicy());
 
         //创建一个 Runnable 类，再定义对象
@@ -547,7 +548,10 @@ Callable 代码：
         System.out.println(f3.get());
         System.out.println(f4.get());
 
-        方式二:使用Executors(线程池的工具类）调用方法返回不同特点的线程池对象
+
+
+
+方式二:使用Executors(线程池的工具类）调用方法返回不同特点的线程池对象
 
 Executors得到线程池对象的常用方法
         Executors:线程池的工具类通过调用方法返回不同类型的线程池对象。
