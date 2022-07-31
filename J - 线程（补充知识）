@@ -5,16 +5,17 @@
         作用:闹钟、定时邮件发送。
 
 定时器的实现方式
-        方式一:Timer
-        方式二: scheduledExecutorService
+        方式一: Timer
+        方式二: ScheduledExecutorService
 
 
 Timer定时器:
-  构造器：
+
+构造器：
 public Timer()           创建Timer定时器对象；
 
-  方法：
-public void schedule(TimerTask task， long delay,long period)        开启一个定时器，按照计划处理TimerTask任务
+方法：
+public void schedule(TimerTask task,long delay,long period)        开启一个定时器，按照计划处理TimerTask任务
 
 
 Timer定时器的特点和存在的问题
@@ -27,7 +28,7 @@ Timer定时器的特点和存在的问题
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-            System.out.println(Thread.currentThread().getName() +"执行一次o~~~");
+                System.out.println(Thread.currentThread().getName() +"执行一次o~~~");
             }
         },delay: 3000,period: 2000);
         //等待三秒执行第一次，后面再次执行每次隔两秒
@@ -38,8 +39,8 @@ Timer定时器的特点和存在的问题
 
 
 
-scheduledExecutorService定时器：
-        scheduledExecutorservice是jdk1.5中引入了并发包，目的是为了弥补Timer的缺陷, ScheduledExecutorService内部为线程池。
+ScheduledExecutorService定时器：
+        ScheduledExecutorservice是jdk1.5中引入了并发包，目的是为了弥补Timer的缺陷, ScheduledExecutorService内部为线程池。
 
 
 Excutor方法：
@@ -57,7 +58,7 @@ scheduledExecutorService的优点：
         pool.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run(){
-                System.out.println(Thread.currentThread().getName()+"执行输出:AAA" + new Date());
+                System.out.println(Thread.currentThread().getName() + "执行输出:AAA" + new Date());
             }
         },initialDelay: 0,period: 2,TimeUnit.SECONDS);//任务、初始时间、间隔时间、时间单位
 
