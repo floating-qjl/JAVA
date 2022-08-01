@@ -10,7 +10,7 @@ IP地址：
         常见的IP分类为:IPv4和IPv6
 
 IP地址
-        IPv6: 128位（ 16个字节)，号称可以为地球每一粒沙子编号。
+        IPv6: 128位（16个字节)，号称可以为地球每一粒沙子编号。
         IPv6分成8个整数，每个整数用四个十六进制位表示，数之间用冒号(∶）分开。
 
 
@@ -31,11 +31,11 @@ InetAddress的使用
         此类表示Internet协议(IP）地址。
 
 API：
-public static InetAddress getLocalHost()              返回本主机的地址对象；
-public static InetAddress getByName(String host)      得到指定主机的IP地址对象，参数是域名或者IP地址
-public string getHostName()                            获取此IP地址的主机名；
-public string getHostAddress()                         返回IP地址字符串；
-public boolean isReachable(int timeout)               在指定毫秒内连通该IP地址对应的主机，连通返回true
+public static InetAddress getLocalHost()               返回本主机的地址对象；
+public static InetAddress getByName(String host)       得到指定主机的IP地址对象，参数是域名或者IP地址
+public String getHostName()                            获取此IP地址的主机名；
+public String getHostAddress()                         返回IP地址字符串；
+public boolean isReachable(int timeout)                在指定毫秒内连通该IP地址对应的主机，连通返回true
 
 代码：
         //获取本机地址对象
@@ -96,7 +96,7 @@ public boolean isReachable(int timeout)               在指定毫秒内连通�
 
 
 传输层的2个常见协议
-        lJCP(Transmission Control Protocol) ︰
+        TCP(Transmission Control Protocol) ︰
         传输控制协议UDP(User Datagram Protocol):用户数据报协议
 
 TCP协议特点
@@ -122,8 +122,8 @@ TCP四次挥手断开连接：
 
 
 UDP协议:·
-        UDp是一种无连接、不可靠传输的协议。
-        将数据源lP、目的地IP和端口封装成数据包，不需要建立连接
+        UDP是一种无连接、不可靠传输的协议。
+        将数据源IP、目的地IP和端口封装成数据包，不需要建立连接
         每个数据包的大小限制在64KB内
         发送不管对方是否准备好，接收方收到也不确认，故是不可靠的
         可以广播发送，发送数据结束时无需释放资源，开销小，速度快。
