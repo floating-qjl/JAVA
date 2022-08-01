@@ -10,11 +10,16 @@ DatagramPacket:数据包对象（韭菜盘子)
 构造器：
 
 public DatagramPacket(byte[] buf, int length，InetAddress address，int port)
-        创建发送端数据包对象 buf:要发送的内容，字节数组length:
-        要发送内容的字节长度address:接收端的IP地址对象port:接收端的端口号
+        创建发送端数据包对象
+        buf:要发送的内容，字节数组
+        length:要发送内容的字节长度
+        address:接收端的IP地址对象
+        port:接收端的端口号
 
 public DatagramPacket(byte[] buf， int length)
-        创建接收端的数据包对象 buf:用来存储接收的内容length:能够接收内容的长度
+        创建接收端的数据包对象 
+        buf:用来存储接收的内容
+        length:能够接收内容的长度
 
 
 
@@ -34,10 +39,10 @@ public void receive(DatagramPacket p)    接收数据包
 //输出端
 public static void main(String[ ] args) throws Exception{
         // 1、创建发送端对象:发送端自带默认的端口号。
-        DatagramSocket socket=new DatagramSocket();
+        DatagramSocket socket = new DatagramSocket();
 
         //2、创建一个数据包对象封装数据（韭菜盘子)
-        byte[] buffer ="我是一颗快乐的韭菜，你愿意吃吗? ".getBytes();
+        byte[] buffer ="我是一颗快乐的韭菜，你愿意吃吗?".getBytes();
         DatagramPacket packet = new DatagramPacket(bufffer,buffer.length,
                                                    InetAddress.getLocalHost(),8888);
 
@@ -78,7 +83,8 @@ UDP的接收端为什么可以接收很多发送端的消息?
 UDP通信-广播、组播
         UDP的三种通信方式
         单播:单台主机与单台主机之间的通信。
-        广播:当前主机与所在网络中的所有主机通信。组播:当前主机与选定的一组主机的通信。
+        广播:当前主机与所在网络中的所有主机通信。
+        组播:当前主机与选定的一组主机的通信。
 
 UDP如何实现广播？
         使用广播地址:255.255.255.255
