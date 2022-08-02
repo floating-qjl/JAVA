@@ -1,0 +1,169 @@
+
+即时通信是什么含义，要实现怎么样的设计?
+        即时通信，是指一个客户端的消息发出去，其他客户端可以接收到。
+        之前我们的消息都是发给服务端的。
+        即时通信需要进行端口转发的设计思想。
+        一旦收到一个消息要推送给其他管道
+        
+服务端：
+
+public class File {
+    private static ExecutorService pool = new ThreadPoolExecutor(3, 5, 6,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<>(2), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+
+    public static List<Socket> list = new LinkedList<>();
+
+    public static void main(String[] args) throws Exception {
+        ServerSocket seversocket = new ServerSocket(7777);
+        while (true) {
+            Socket socket = seversocket.accept();
+            System.out.println(socket.getRemoteSocketAddress() + "上线了");
+            list.add(socket);
+            pool.execute(new Server(socket));
+        }
+    }
+}
+
+
+
+public class Server implements Runnable {
+    private Socket socket;
+
+    public Server(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            InputStream is = socket.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String rs;
+            while ((rs = br.readLine()) != null) {
+                System.out.println(socket.getRemoteSocketAddress() + "发来了：" + rs);
+                for (Socket socket1 : File.list) {
+                    PrintStream ps = new PrintStream(socket1.getOutputStream());
+                    ps.println(rs);
+                    ps.flush();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(socket.getRemoteSocketAddress() + "下线了");
+            File.list.remove(socket);
+        }
+    }
+}
+
+
+
+客户端：
+
+
+public class People {
+
+    public static void main(String[] args) throws Exception {
+        Socket socket = new Socket("127.0.0.1", 7777);
+        System.out.println("客户端已上线");
+
+        new PeopleReader(socket).start();
+
+        OutputStream os = socket.getOutputStream();
+        PrintStream ps = new PrintStream(os);
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String rs = scanner.nextLine();
+            ps.println(rs);
+            ps.flush();
+        }
+    }
+}
+
+class PeopleReader extends Thread{
+    private Socket socket;
+
+    public PeopleReader(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            InputStream is = socket.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String rs;
+            while ((rs = br.readLine()) != null) {
+                System.out.println("收到消息：" + rs);
+            }
+        }catch (Exception e1) {
+            System.out.println("您已断线");
+        }
+    }
+}
+
+
+
+        
+
+
+之前的客户端都是什么样的
+        其实就是CS架构，客户端实需要我们自己开发实现的。
+BS结构是什么样的，需要开发客户端吗?
+        浏览器访问服务端，不需要开发客户端。
+
+注意:服务器必须给浏览器响应HTTP协议格式的数据，否则浏览器不识别。
+
+HTTP响应数据的协议格式:就是给浏览器显示的网页信息
+
+
+
+
+public class File {
+    //使用静态变量记住一个线程池对象
+    private static ExecutorService pool = new ThreadPoolExecutor(3, 5, 6, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(2), Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.AbortPolicy());
+
+    public static void main(String[] args) {
+        try {
+            //1.注册端口
+            ServerSocket ss = new ServerSocket(8080);
+            //2.创建一个循环接收多个客户端的请求。
+            while (true) {
+                Socket socket = ss.accept();
+                //3.交给一个独立的线程来处理!
+                pool.execute(new ServerReaderRunnable(socket));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+class ServerReaderRunnable implements RunnabLe {
+    private Socket socket;
+
+    public ServerReaderRunnable(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            //浏览器已经与本线程建立了Socket管道
+            // 响应消息给浏览器显示
+            PrintStream ps = new PrintStream(socket.getOutputStream());
+            //必须响应HTTP协议格式数据，否则浏览 器不认识消息
+            ps.printLn("HTTP/1.1 200 0K"); //协议类型和版本响应成功的消息1
+            ps.printLn("Content- Type:text/html;charset=UTF-8"); //响应的数据类型:文本/网页
+            ps.printLn(); //必须发送一个空行
+
+            //才可以响应数据回去给浏览器
+            ps.println("<span styLe=' color:red; font-size:9θpx'>《最牛的149期》</span>");
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(socket.getRemoteSocketAddress() + "下线了! ! !");
+        }
+    }
+}
