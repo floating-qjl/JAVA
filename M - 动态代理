@@ -29,7 +29,7 @@ public static Skill getProxy(Star obj){
         return (Skill) Proxy.newProxyInstance(obj.getClass().getClassLoader()，
                 obj.getclass().getInterfaces(),new InvocationHandler() {
                     @Override
-                    public 0bject invoke(Object proxy，Method method,Object[] args) throws Throwable{
+                    public Object invoke(Object proxy，Method method,Object[] args) throws Throwable{
                         //method 正在调用的方法对象
                         //args代表这个方法的参数。
                         Object rs = method.invoke(obj,args);
