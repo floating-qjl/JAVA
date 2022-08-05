@@ -50,7 +50,7 @@ Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)  返回单个�
 
 代码：
         @Test
-        public void getconstructors(){
+        public void getConstructors(){
         // a.第一步:获取类对象
         Class c = Student.class;
         // b.提取类中的全部的构造器对象（只能拿 public 构造器）
@@ -105,7 +105,7 @@ Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)  返回单个�
         获取构造器的作用依然是初始化一个对象返回。
 
 Constructor类中用于创建对象的方法:
-        T newlnstance(Object... initargs)            根据指定的构造器创建对象
+        T newInstance(Object... initargs)            根据指定的构造器创建对象
         public void setAccessible(boolean flag)    设置为true,表示取消访问检查 进行暴力反射
 
 
@@ -162,9 +162,9 @@ public void getDeclaredFields(){
 
 //获取某个成员变量对象Field getDeclaredField(String name);
 @Test
-public void..getDeclanedFieldsO{
+public void..getDeclaredFields(){
         //a.定位Class对象
-        class c = student.class;
+        Class c = student.class;
         // b.根据名称定位某个成员变量
         Field f = c.getDeclaredField(age)；
         System.out.println(f.getName() + "==>" + f.getType());
@@ -197,14 +197,14 @@ Method getDeclaredMethod(String name，Class<?>... parameterTypes)  返回单个
         获取成员方法的作用依然是在某个对象中进行执行此方法
 
 方法：
-object invoke(0bject obj, object.. . args)
+object invoke(Object obj, object... args)
 运行方法
 参数一:用obj对象调用该方法
 参数二:调用方法的传递的参数（如果没有就不写)
 返回值:方法的返回值（如果没有就不写)
 
 
-        代码：
+代码：
 @Test
 public void getDeclaredMethods(){
     //获取类对象
@@ -222,7 +222,7 @@ public void getDeclaredMethod() throws Exception{
         //获取类对象
         Class c = Dog.class;
         Method m = c.getDeclaredMethod(eat)；
-        Method m2 = c.getDeclaredMethod(eat,String.class)；
+        Method m2 = c.getDeclaredMethod(eat, String.class)；
 
         //暴力打开权限
         m.setAccessiblie(true);
@@ -232,7 +232,7 @@ public void getDeclaredMethod() throws Exception{
         //注意：方法如果没有结果回来，则返回null
         Object result = m.invoke(d);
 
-        Object result2 = m2.invoke(d,"骨头");
+        Object result2 = m2.invoke(d, "骨头");
 
 }
 
@@ -291,21 +291,22 @@ public void getDeclaredMethod() throws Exception{
 
 
 public static void save(Object obj){
-        FrintStream ps = new PrintStream(new FileOutputStream
+        PrintStream ps = new PrintStream(new FileOutputStream
         ("junit-reflect-annotation-proxy-app/src/data.txt",true);
 
         //提取这个对象的全部成员变最:只有反射可以解决
         Class c = obj.getClass();
 
-        //c.getSimpleName()获取当前类名c.getName获取全限名:包名+类名
-        ps.println( "======r===E=a===" + c.getSimpleName() + "===============");
+        //c.getSimpleName()获取当前类名
+        //c.getName获取全限名:包名+类名
+        ps.println( "=============" + c.getSimpleName() + "===============");
 
         //提取它的全部成员变量
         Field[ ] fields = c.getDeclaredFields();
         //获取成员变量的信思
         for (Field field : fields) {
             String name = field.getName();
-            //提取本成员变量在obj对象中的值（取值)
+            //提取本成员变量在obj对象中的值（取值）
             field.setAccessible(true);
             String value = field.get(obj) + "";
             ps.println(name + "=" + value);
