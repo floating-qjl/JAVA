@@ -104,7 +104,7 @@ T getDeclaredAnnotation(Class<T> annotationClass)
 boolean isAnnotationPresent(Class<Annotation> annotationClass)
 判断当前对象是否使用了指定的注解，如果使用了则返回true，否则false
 
-所有的类成分Class,Method , Field , Constructor，都实现了AnnotatedElement接口他们都拥有解析注解的能力:
+所有的类成分Class, Method , Field , Constructor，都实现了AnnotatedElement接口他们都拥有解析注解的能力:
 
 
 
