@@ -1,0 +1,34 @@
+小蓝要把一个字符串中的字母按其在字母表中的顺序排列。
+
+例如，LANQIAO 排列后为 AAILNOQ。
+
+又如，GOODGOODSTUDYDAYDAYUP 排列后为 AADDDDDGGOOOOPSTUUYYY。
+
+请问对于以下字符串，排列之后字符串是什么？
+
+WHERETHEREISAWILLTHEREISAWAY
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+import java.util.*;
+// 1:无需package
+// 2: 类名必须Main, 不可修改
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        //在此输入您的代码...
+        String arr = scan.next();
+        char[] list = arr.toCharArray();
+        Arrays.sort(list);
+        System.out.println(list);
+
+        scan.close();
+    }
+}
